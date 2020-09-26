@@ -44,11 +44,15 @@
                             <button class="button_group" onclick="switchOn(1)" type="button">
                                 ON
                             </button>
-                            <button class="button_group" onclick="switchOn(2)" type="button">
+                            <button class="button_group" onclick="switchOff(1)" type="button">
                                 OFF
                             </button>
                         </td>
-                        <td class="table_body_td">上線</td>
+                        <td class="table_body_td">
+                            <button class="button_group control_online" onclick="switchOnline(1)" type="button">
+                                上線
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

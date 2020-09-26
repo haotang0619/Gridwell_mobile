@@ -9,6 +9,10 @@
   width: 100px;
 }
 
+.control_online {
+  margin: 0;
+}
+
 p {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }

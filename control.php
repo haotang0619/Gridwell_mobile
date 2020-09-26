@@ -8,6 +8,7 @@
 
 <!-- Specify the character encoding to UTF-8  -->
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width">
 <!-- include header -->
 <?php include "./php_control_page/header.php"; ?>
 
