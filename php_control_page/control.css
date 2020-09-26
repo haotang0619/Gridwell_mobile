@@ -1,0 +1,14 @@
+.control_header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.control_button {
+  background: #a4d000;
+  padding: 8px;
+  width: 100px;
+}
+
+p {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
