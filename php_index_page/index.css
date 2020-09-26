@@ -1,4 +1,4 @@
-.title {
+.index_title {
   color: #1979a9;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 1.5rem;
@@ -8,13 +8,13 @@
   margin: 30px 0;
 }
 
-.form {
+.index_form {
   align-items: center;
   display: flex;
   justify-content: center;
   margin: 30px;
 }
 
-.text {
+.index_text {
   margin: 15px;
 }

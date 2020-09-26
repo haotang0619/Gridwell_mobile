@@ -1,4 +1,4 @@
-<!-- This is login page(index.html), the content is in ./php_index_page directory -->
+<!-- This is login page, the content is in ./php_index_page directory -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <?php
