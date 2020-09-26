@@ -9,12 +9,6 @@
   width: 100px;
 }
 
-.control_on_off {
-  font-size: 14px;
-  min-width: 0;
-  padding: 4px;
-}
-
 .control_online {
   margin: 0;
 }

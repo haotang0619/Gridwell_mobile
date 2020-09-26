@@ -41,10 +41,10 @@
                     <tr class="table_body_tr">
                         <td class="table_body_td">1</td>
                         <td class="table_body_td">
-                            <button class="button_group control_on_off" onclick="switchOn(1)" type="button">
+                            <button class="button_group" onclick="switchOn(1)" type="button">
                                 ON
                             </button>
-                            <button class="button_group control_on_off" onclick="switchOff(1)" type="button">
+                            <button class="button_group" onclick="switchOff(1)" type="button">
                                 OFF
                             </button>
                         </td>
