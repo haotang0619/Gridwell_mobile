@@ -24,7 +24,7 @@
                 <label for="password" class="input_label">輸入密碼</label>
             </div>
         </div>
-        <button class="button_group" onclick="logIn()" type="button">
+        <button class="button_group index_button" onclick="logIn()" type="button">
             送出
         </button>
     </div>

@@ -40,7 +40,14 @@
                 <tbody class="table_body">
                     <tr class="table_body_tr">
                         <td class="table_body_td">1</td>
-                        <td class="table_body_td">ON / OFF</td>
+                        <td class="table_body_td">
+                            <button class="button_group" onclick="switchOn(1)" type="button">
+                                ON
+                            </button>
+                            <button class="button_group" onclick="switchOn(2)" type="button">
+                                OFF
+                            </button>
+                        </td>
                         <td class="table_body_td">上線</td>
                     </tr>
                 </tbody>

@@ -38,7 +38,7 @@
 }
 
 .select_group .select_text:focus {
-  border: 2px solid #615dec;
+  border: 2px solid #1979a9;
   border-radius: 5px;
 }
 
@@ -64,5 +64,5 @@
 }
 
 .select_text:focus ~ .select_label {
-  color: #615dec;
+  color: #1979a9;
 }
