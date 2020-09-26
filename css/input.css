@@ -1,0 +1,41 @@
+.input_group {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  position: relative;
+}
+
+.input_group .input_area {
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 5px;
+  font-size: 18px;
+  outline: none;
+  padding: 16px 13px;
+  width: 200px;
+}
+
+.input_group .input_area:valid + .input_label {
+  color: #8d8d8d;
+  font-size: 14px;
+  padding: 0 3px;
+  top: -8px;
+}
+
+.input_group .input_area:focus {
+  border: 2px solid #1979a9;
+}
+
+.input_group .input_area:focus + .input_label {
+  color: #1979a9;
+  font-size: 14px;
+  padding: 0 3px;
+  top: -8px;
+}
+
+.input_group .input_label {
+  background: #fff;
+  color: #8d8d8d;
+  left: 13px;
+  position: absolute;
+  top: 13px;
+  transition: 0.1s;
+}

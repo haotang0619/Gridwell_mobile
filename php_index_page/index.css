@@ -1,0 +1,20 @@
+.title {
+  color: #1979a9;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0em;
+  line-height: 1.334;
+  margin: 30px 0;
+}
+
+.form {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+.text {
+  margin: 15px;
+}
