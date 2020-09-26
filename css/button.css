@@ -8,8 +8,9 @@
   color: #000;
   display: inline-flex;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 0.95rem;
+  font-size: 18px;
   font-weight: 500;
+  justify-content: center;
   letter-spacing: 0.03em;
   line-height: 1.75;
   margin: 0 10px;

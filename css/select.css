@@ -1,0 +1,68 @@
+.select_group {
+  border: 1px solid #dadce0;
+  border-radius: 5px;
+  display: inline-block;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin: 40px 0;
+  position: relative;
+  width: 100%;
+}
+
+.select_group:after {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.12);
+  content: "";
+  height: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 22px;
+  width: 0;
+}
+
+.select_group .select_text {
+  appearance: none;
+  /* background-color: transparent; */
+  background: linear-gradient(#fff, #bbb);
+  border: none;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 18px;
+  outline: none;
+  padding: 12px 15px;
+  position: relative;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.select_group .select_text:focus {
+  border: 2px solid #615dec;
+  border-radius: 5px;
+}
+
+.select_label {
+  color: #8d8d8d;
+  font-size: 18px;
+  font-weight: normal;
+  left: 10px;
+  pointer-events: none;
+  position: absolute;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+
+.select_text:valid ~ .select_label,
+.select_text:focus ~ .select_label {
+  background: #fff;
+  color: #8d8d8d;
+  font-size: 14px;
+  padding: 0 3px;
+  top: -12px;
+  transition: 0.2s ease all;
+}
+
+.select_text:focus ~ .select_label {
+  color: #615dec;
+}
