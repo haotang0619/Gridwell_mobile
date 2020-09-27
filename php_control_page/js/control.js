@@ -39,10 +39,11 @@ $.ajax({
             </td>
           `;
           break;
+
         case "1":
           content += `
                 <span id="value_${mes.id}">2.5</span>
-                <button class="button_group control_setting" onclick="setFormula(${
+                <button class="button_group control_setting" onclick="setFormulaOpen(${
                   mes.id
                 })" type="button">
                 ${settingIcon("button_svg control_svg")}
@@ -50,6 +51,7 @@ $.ajax({
             </td>
           `;
           break;
+
         default:
           content += `
                 <button class="button_group" onclick="viewVideo(${mes.id})" type="button">
@@ -64,7 +66,7 @@ $.ajax({
       }
       const status = `
         <td class="table_body_td">
-            <button class="button_group control_online" onclick="switchOnline(${mes.id})" type="button">
+            <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
                 更新
             </button>
         </td>
@@ -96,7 +98,7 @@ const editNameOpen = (id) => {
         <span class="control_text">名稱</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_name" value="${name}" required />
-            <label for="account" class="input_label">輸入名稱</label>
+            <label for="new_name" class="input_label">輸入名稱</label>
         </div>
     </div>
   `;
@@ -184,6 +186,103 @@ const switchOff = (id) => {
   });
 };
 
+const switchOnlineOpen = (id) => {
+  showCheck("switch_online", id);
+};
+
+const switchOnline = (id) => {
+  $.ajax({
+    url: "http://111.185.9.227:3008/stat",
+    type: "GET",
+    dateType: "jsonp",
+    data: {
+      nodeid: id,
+    },
+    success: (data) => {
+      switch (data) {
+        case "Unknown":
+          $(`#on_off_${id}`).text("-");
+          $(`#status_${id}`).html("未知");
+          break;
+
+        case "":
+          $(`#on_off_${id}`).text("0");
+          $(`#status_${id}`).html("上線");
+          break;
+
+        default:
+          $(`#on_off_${id}`).text("1");
+          $(`#status_${id}`).html("離線");
+          break;
+      }
+      closeCheck();
+    },
+    error: () => alert("網路錯誤"),
+  });
+};
+
+const setFormulaOpen = (id) => {
+  $("#modal").css("display", "block");
+  const header = `
+    <div class="control_form">
+        <h2 class="control_text">編輯公式</h2>
+    </div>
+  `;
+
+  const form = `
+    <div class="control_form">
+        <span class="control_text">a</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_a" onkeyup="changeFormula()" value=1 required />
+            <label for="new_a" class="input_label">輸入a值</label>
+        </div>
+    </div>
+    <div class="control_form">
+        <span class="control_text">b</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_b" onkeyup="changeFormula()" value=1 required />
+            <label for="new_b" class="input_label">輸入b值</label>
+        </div>
+    </div>
+  `;
+
+  const text = `
+    <div class="control_form">
+        <span class="control_text">
+            <span id="text_a">1</span> X + <span id="text_b">1</span>
+        </span>
+    </div>
+  `;
+
+  const buttons = `
+    <div class="control_form">
+        <button class="button_group" onclick="closeModal()" type="button">
+            取消
+        </button>
+        <button class="button_group" onclick="showCheck('formula', ${id})" type="button">
+            送出
+        </button>
+    </div>
+  `;
+
+  $("#modal_box").empty();
+  $("#modal_box").append(header);
+  $("#modal_box").append(form);
+  $("#modal_box").append(text);
+  $("#modal_box").append(buttons);
+};
+
+const changeFormula = () => {
+  $("#text_a").text($("#new_a").val());
+  $("#text_b").text($("#new_b").val());
+};
+
+const setFormula = (id) => {
+  console.log(`setFormula(${id})`);
+  closeCheck();
+  closeModal();
+};
+
 const closeCheck = () => {
   $("#check").css("display", "none");
 };
@@ -259,6 +358,52 @@ const showCheck = (action, id) => {
       $("#check_box").empty();
       $("#check_box").append(text3);
       $("#check_box").append(buttons3);
+      break;
+
+    case "switch_online":
+      const text4 = `
+        <div class="control_form">
+            <span class="control_text">確認要更新此設備狀態嗎？</span>
+        </div>
+      `;
+
+      const buttons4 = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" onclick="switchOnline(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text4);
+      $("#check_box").append(buttons4);
+      break;
+
+    default:
+      const text5 = `
+        <div class="control_form">
+            <span class="control_text">確認要更改此設備的公式嗎？</span>
+        </div>
+      `;
+
+      const buttons5 = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" onclick="setFormula(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text5);
+      $("#check_box").append(buttons5);
       break;
   }
 };
