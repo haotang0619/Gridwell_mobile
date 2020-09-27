@@ -39,3 +39,24 @@
   top: 13px;
   transition: 0.1s;
 }
+
+.input_group .input_helper {
+  display: none;
+  font-size: 12px;
+  margin: 0;
+  text-align: left;
+}
+
+/* When error happens, add the class .input_error with .input_area */
+.input_group .input_error {
+  border: 2px solid red !important;
+}
+
+.input_group .input_error + .input_label {
+  color: red !important;
+}
+
+.input_group .input_error + .input_label + .input_helper {
+  color: red;
+  display: block;
+}

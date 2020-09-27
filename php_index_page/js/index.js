@@ -25,7 +25,7 @@ const logIn = () => {
         setCookie("accessToken", message.token, 1);
         window.location.href = "./control.php";
       } else {
-        alert("帳號或密碼錯誤！");
+        $(".index_error").css("display", "block");
       }
     },
     error: () => alert("網路錯誤"),

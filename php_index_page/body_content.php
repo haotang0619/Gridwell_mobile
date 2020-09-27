@@ -24,6 +24,9 @@
                 <label for="password" class="input_label">輸入密碼</label>
             </div>
         </div>
+        <div class="index_form index_error">
+            <strong>帳號或密碼錯誤！</strong>
+        </div>
         <button class="button_group index_button" id="submit" onclick="logIn()" type="button">
             送出
         </button>

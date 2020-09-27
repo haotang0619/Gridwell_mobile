@@ -19,6 +19,11 @@
   margin: 15px;
 }
 
+.index_error {
+  color: red;
+  display: none;
+}
+
 .index_button {
   font-size: 18px;
   padding: 4px 22px;
