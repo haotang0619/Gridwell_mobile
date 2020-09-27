@@ -1,7 +1,14 @@
 <?php
 $accessToken = $_POST["accessToken"];
-$acc = explode("|", $accessToken)[1];
-$token = explode("|", $accessToken)[0];
+$accessArray = explode("|", $accessToken, 2);
+$acc = isset($accessArray[1]) ? $accessArray[1] : null;
+$token = isset($accessArray[0]) ? $accessArray[0] : null;
+
+if ($acc === null || $token === null) {
+    $message = array("valid" => false);
+    echo json_encode($message);
+    return;
+}
 
 include $_SERVER["DOCUMENT_ROOT"] . "/Gridwell_mobile/api/mysql.php";
 
