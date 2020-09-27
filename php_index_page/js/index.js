@@ -12,7 +12,7 @@ const logIn = () => {
   pwd = $("#password").val();
 
   $.ajax({
-    url: "php_index_page/api/login.php",
+    url: "php_index_page/api/log_in.php",
     type: "POST",
     dateType: "text",
     data: {

@@ -40,3 +40,8 @@ $.ajax({
     alert("網路錯誤");
   },
 });
+
+const logOut = () => {
+  deleteCookie();
+  window.location.href = "./";
+};
