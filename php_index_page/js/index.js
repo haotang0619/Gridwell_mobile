@@ -19,7 +19,7 @@ const logIn = () => {
       acc,
       pwd,
     },
-    success: function (data) {
+    success: (data) => {
       const message = JSON.parse(data);
       if (message.valid) {
         setCookie("accessToken", message.token, 1);
@@ -28,8 +28,6 @@ const logIn = () => {
         alert("帳號或密碼錯誤！");
       }
     },
-    error: function () {
-      alert("網路錯誤");
-    },
+    error: () => alert("網路錯誤"),
   });
 };

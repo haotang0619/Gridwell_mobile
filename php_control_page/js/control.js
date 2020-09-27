@@ -6,7 +6,7 @@ $.ajax({
   data: {
     field: 1,
   },
-  success: function (data) {
+  success: (data) => {
     $("#table_body").empty();
 
     const message = JSON.parse(data);
@@ -28,20 +28,20 @@ $.ajax({
       switch (mes.type) {
         case "0":
           content += `
-                <button class="button_group" onclick="switchOn(${mes.id})" type="button">
+                <button class="button_group" onclick="switchOnOpen(${mes.id})" type="button">
                     ON
                 </button>
-                <button class="button_group" onclick="switchOff(${mes.id})" type="button">
+                <button class="button_group" onclick="switchOffOpen(${mes.id})" type="button">
                     OFF
                 </button>
-                <span id="#on_off_${mes.id}">-</span>
+                <span id="on_off_${mes.id}">-</span>
             </td>
           `;
           break;
         case "1":
           // svg => Setting Icon
           content += `
-                <span id="#value_${mes.id}">2.5</span>
+                <span id="value_${mes.id}">2.5</span>
                 <button class="button_group control_setting" onclick="setFormula(${mes.id})" type="button">
                     <svg class="button_svg control_svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path transform="scale(1.2, 1.2)" d="M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"></path></svg>
                 </button>
@@ -72,9 +72,7 @@ $.ajax({
       $("#table_body").append(`${tr_start}${name}${content}${status}${tr_end}`);
     });
   },
-  error: function () {
-    alert("網路錯誤");
-  },
+  error: () => alert("網路錯誤"),
 });
 
 const closeModal = () => {
@@ -130,7 +128,7 @@ const editName = (id) => {
       id,
       name,
     },
-    success: function (data) {
+    success: (data) => {
       const message = JSON.parse(data);
       if (message.success) {
         $(`#name_${id}`).text(name);
@@ -140,9 +138,47 @@ const editName = (id) => {
         alert("網路錯誤");
       }
     },
-    error: function () {
-      alert("網路錯誤");
+    error: () => alert("網路錯誤"),
+  });
+};
+
+const switchOnOpen = (id) => {
+  showCheck("switch_on", id);
+};
+
+const switchOn = (id) => {
+  $.ajax({
+    url: "http://111.185.9.227:3008/onn",
+    type: "GET",
+    dateType: "jsonp",
+    data: {
+      nodeid: id,
     },
+    success: () => {
+      $(`#on_off_${id}`).text("1");
+      closeCheck();
+    },
+    error: () => alert("網路錯誤"),
+  });
+};
+
+const switchOffOpen = (id) => {
+  showCheck("switch_off", id);
+};
+
+const switchOff = (id) => {
+  $.ajax({
+    url: "http://111.185.9.227:3008/off",
+    type: "GET",
+    dateType: "jsonp",
+    data: {
+      nodeid: id,
+    },
+    success: () => {
+      $(`#on_off_${id}`).text("0");
+      closeCheck();
+    },
+    error: () => alert("網路錯誤"),
   });
 };
 
@@ -155,13 +191,13 @@ const showCheck = (action, id) => {
 
   switch (action) {
     case "name":
-      const text = `
+      const text1 = `
         <div class="control_form">
             <span class="control_text">確認要更改此設備的名稱嗎？</span>
         </div>
       `;
 
-      const buttons = `
+      const buttons1 = `
         <div class="control_form">
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
@@ -173,8 +209,54 @@ const showCheck = (action, id) => {
       `;
 
       $("#check_box").empty();
-      $("#check_box").append(text);
-      $("#check_box").append(buttons);
+      $("#check_box").append(text1);
+      $("#check_box").append(buttons1);
+      break;
+
+    case "switch_on":
+      const text2 = `
+        <div class="control_form">
+            <span class="control_text">確認要開啟此設備嗎？</span>
+        </div>
+      `;
+
+      const buttons2 = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" onclick="switchOn(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text2);
+      $("#check_box").append(buttons2);
+      break;
+
+    case "switch_off":
+      const text3 = `
+        <div class="control_form">
+            <span class="control_text">確認要關閉此設備嗎？</span>
+        </div>
+      `;
+
+      const buttons3 = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" onclick="switchOff(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text3);
+      $("#check_box").append(buttons3);
       break;
   }
 };

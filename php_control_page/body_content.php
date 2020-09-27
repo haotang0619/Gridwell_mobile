@@ -21,7 +21,7 @@
         </div>
 
         <div class="select_group">
-            <select class="select_text" onchange="switchImage()" required>
+            <select class="select_text" required>
                 <option value=""></option>
                 <option value="1" selected>1</option>
             </select>

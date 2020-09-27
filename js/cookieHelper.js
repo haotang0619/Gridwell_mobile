@@ -23,7 +23,7 @@ $.ajax({
   data: {
     accessToken,
   },
-  success: function (data) {
+  success: (data) => {
     const message = JSON.parse(data);
     if (message.valid) {
       if (window.location.pathname === "/Gridwell_mobile/") {
@@ -36,9 +36,7 @@ $.ajax({
       }
     }
   },
-  error: function () {
-    alert("網路錯誤");
-  },
+  error: () => alert("網路錯誤"),
 });
 
 const logOut = () => {
