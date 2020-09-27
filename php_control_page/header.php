@@ -9,3 +9,9 @@
 
 <!-- Page css  -->
 <link href="php_control_page/control.css" rel="stylesheet" type="text/css">
+
+<!-- General js  -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- Check login js  -->
+<script type="text/javascript" src="js/cookieHelper.js"></script>

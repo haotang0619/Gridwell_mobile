@@ -7,4 +7,13 @@
 <link href="css/nav.css" rel="stylesheet" type="text/css">
 
 <!-- Page css  -->
-<link href="php_index_page/index.css" rel="stylesheet" type="text/css">
+<link href="php_index_page/css/index.css" rel="stylesheet" type="text/css">
+
+<!-- General js  -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- Check login js  -->
+<script type="text/javascript" src="js/cookieHelper.js"></script>
+
+<!-- Page js  -->
+<script type="text/javascript" src="php_index_page/js/index.js"></script>

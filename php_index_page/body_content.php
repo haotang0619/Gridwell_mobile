@@ -13,18 +13,18 @@
         <div class="index_form">
             <span class="index_text">帳號</span>
             <div class="input_group">
-                <input type="text" class="input_area" id="account" required />
+                <input type="text" class="input_area" id="account" onkeyup="submit(event)" required />
                 <label for="account" class="input_label">輸入帳號</label>
             </div>
         </div>
         <div class="index_form">
             <span class="index_text">密碼</span>
             <div class="input_group">
-                <input type="text" class="input_area" id="password" required />
+                <input type="text" class="input_area" id="password" onkeyup="submit(event)" required />
                 <label for="password" class="input_label">輸入密碼</label>
             </div>
         </div>
-        <button class="button_group index_button" onclick="logIn()" type="button">
+        <button class="button_group index_button" id="submit" onclick="logIn()" type="button">
             送出
         </button>
     </div>
