@@ -12,7 +12,10 @@ $.ajax({
     const message = JSON.parse(data);
     message.forEach((mes) => {
       const tr_start = `<tr class="table_body_tr">`;
-      let name = `<td class="table_body_td"><span id="name_${mes.id}">${mes.name}</span>`;
+      let name = `
+        <td class="table_body_td control_name_td">
+        <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
+      `;
       // svg => Edit Icon
       name += `
             <button class="button_group control_setting" onclick="editNameOpen(${mes.id})" type="button">
