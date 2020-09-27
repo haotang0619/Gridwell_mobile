@@ -38,7 +38,13 @@
                     </tr>
                 </thead>
                 <!-- php_control_page/js/control.js -->
+                <!-- Loading Icon show first -->
                 <tbody class="table_body" id="table_body">
+                    <script type="text/javascript">
+                        $("#table_body").append("<td></td>");
+                        $("#table_body").append(loadingIcon("control_loading"));
+                        init();
+                    </script>
                 </tbody>
             </table>
         </div>

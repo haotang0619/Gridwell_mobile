@@ -9,6 +9,12 @@
   width: 100px;
 }
 
+.control_loading {
+  height: 40px !important;
+  margin: 20px;
+  width: 40px !important;
+}
+
 .control_name_td {
   max-width: 90px;
 }

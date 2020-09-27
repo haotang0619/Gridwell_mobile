@@ -1,22 +1,23 @@
 // Init table
-$.ajax({
-  url: "php_control_page/api/get_table.php",
-  type: "POST",
-  dateType: "text",
-  data: {
-    field: 1,
-  },
-  success: (data) => {
-    $("#table_body").empty();
+const init = () => {
+  $.ajax({
+    url: "php_control_page/api/get_table.php",
+    type: "POST",
+    dateType: "text",
+    data: {
+      field: 1,
+    },
+    success: (data) => {
+      $("#table_body").empty();
 
-    const message = JSON.parse(data);
-    message.forEach((mes) => {
-      const tr_start = `<tr class="table_body_tr">`;
-      let name = `
+      const message = JSON.parse(data);
+      message.forEach((mes) => {
+        const tr_start = `<tr class="table_body_tr">`;
+        let name = `
         <td class="table_body_td control_name_td">
         <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
       `;
-      name += `
+        name += `
             <button class="button_group control_setting" onclick="editNameOpen(${
               mes.id
             })" type="button">
@@ -25,10 +26,10 @@ $.ajax({
         </td>
       `;
 
-      let content = `<td class="table_body_td">`;
-      switch (mes.type) {
-        case "0":
-          content += `
+        let content = `<td class="table_body_td">`;
+        switch (mes.type) {
+          case "0":
+            content += `
                 <button class="button_group" onclick="switchOnOpen(${mes.id})" type="button">
                     ON
                 </button>
@@ -38,10 +39,10 @@ $.ajax({
                 <span id="on_off_${mes.id}">-</span>
             </td>
           `;
-          break;
+            break;
 
-        case "1":
-          content += `
+          case "1":
+            content += `
                 <span id="value_${mes.id}">2.5</span>
                 <button class="button_group control_setting" onclick="setFormulaOpen(${
                   mes.id
@@ -50,10 +51,10 @@ $.ajax({
                 </button>
             </td>
           `;
-          break;
+            break;
 
-        default:
-          content += `
+          default:
+            content += `
                 <button class="button_group" onclick="viewVideo(${mes.id})" type="button">
                     查看
                 </button>
@@ -62,22 +63,25 @@ $.ajax({
                 </button>
             </td>
           `;
-          break;
-      }
-      const status = `
+            break;
+        }
+        const status = `
         <td class="table_body_td">
             <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
                 更新
             </button>
         </td>
       `;
-      const tr_end = `</tr>`;
+        const tr_end = `</tr>`;
 
-      $("#table_body").append(`${tr_start}${name}${content}${status}${tr_end}`);
-    });
-  },
-  error: () => alert("網路錯誤"),
-});
+        $("#table_body").append(
+          `${tr_start}${name}${content}${status}${tr_end}`
+        );
+      });
+    },
+    error: () => alert("網路錯誤"),
+  });
+};
 
 const closeModal = () => {
   $("#modal").css("display", "none");
