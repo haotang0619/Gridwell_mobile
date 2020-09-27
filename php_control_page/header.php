@@ -15,6 +15,9 @@
 <!-- General js  -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 
+<!-- Icons js  -->
+<script type="text/javascript" src="icons/icons.js"></script>
+
 <!-- Check login js  -->
 <script type="text/javascript" src="js/cookieHelper.js"></script>
 
