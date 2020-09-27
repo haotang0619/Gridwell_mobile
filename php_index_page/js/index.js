@@ -10,6 +10,7 @@ const submit = (event) => {
 const logIn = () => {
   acc = $("#account").val();
   pwd = $("#password").val();
+  $("#submit").prepend(loadingIcon());
 
   $.ajax({
     url: "php_index_page/api/log_in.php",
@@ -26,6 +27,7 @@ const logIn = () => {
         window.location.href = "./control.php";
       } else {
         $(".index_error").css("display", "block");
+        $("#submit").html("送出");
       }
     },
     error: () => alert("網路錯誤"),

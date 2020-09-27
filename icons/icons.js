@@ -11,3 +11,12 @@ const settingIcon = (classes) => {
   const svg_end = `</svg>`;
   return `${svg_head}${path}${svg_end}`;
 };
+
+const loadingIcon = (classes) => {
+  const div_head = `<div class="loading_group ${classes}" role="progressbar">`;
+  const svg_head = `<svg viewBox="22 22 44 44">`;
+  const circle = `<circle class="loading_circle" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle>`;
+  const svg_end = `</svg>`;
+  const div_end = `</div>`;
+  return `${div_head}${svg_head}${circle}${svg_end}${div_end}`;
+};

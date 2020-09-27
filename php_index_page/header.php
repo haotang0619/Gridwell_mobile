@@ -9,6 +9,10 @@
 <!-- Page css  -->
 <link href="php_index_page/css/index.css" rel="stylesheet" type="text/css">
 
+<!-- Icons  -->
+<link href="icons/icons.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="icons/icons.js"></script>
+
 <!-- General js  -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 

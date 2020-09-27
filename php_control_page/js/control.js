@@ -122,6 +122,8 @@ const editNameOpen = (id) => {
 
 const editName = (id) => {
   const name = $("#new_name").val();
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
 
   $.ajax({
     url: "php_control_page/api/edit_name.php",
@@ -140,9 +142,15 @@ const editName = (id) => {
         closeModal();
       } else {
         alert("網路錯誤");
+        $("#confirm").html("確認");
       }
+      $("#check_backdrop").css("pointer-events", "auto");
     },
-    error: () => alert("網路錯誤"),
+    error: () => {
+      alert("網路錯誤");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
   });
 };
 
@@ -151,6 +159,9 @@ const switchOnOpen = (id) => {
 };
 
 const switchOn = (id) => {
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
+
   $.ajax({
     url: "http://111.185.9.227:3008/onn",
     type: "GET",
@@ -161,8 +172,13 @@ const switchOn = (id) => {
     success: () => {
       $(`#on_off_${id}`).text("1");
       closeCheck();
+      $("#check_backdrop").css("pointer-events", "auto");
     },
-    error: () => alert("網路錯誤"),
+    error: () => {
+      alert("網路錯誤");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
   });
 };
 
@@ -171,6 +187,9 @@ const switchOffOpen = (id) => {
 };
 
 const switchOff = (id) => {
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
+
   $.ajax({
     url: "http://111.185.9.227:3008/off",
     type: "GET",
@@ -181,8 +200,13 @@ const switchOff = (id) => {
     success: () => {
       $(`#on_off_${id}`).text("0");
       closeCheck();
+      $("#check_backdrop").css("pointer-events", "auto");
     },
-    error: () => alert("網路錯誤"),
+    error: () => {
+      alert("網路錯誤");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
   });
 };
 
@@ -191,6 +215,9 @@ const switchOnlineOpen = (id) => {
 };
 
 const switchOnline = (id) => {
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
+
   $.ajax({
     url: "http://111.185.9.227:3008/stat",
     type: "GET",
@@ -216,8 +243,13 @@ const switchOnline = (id) => {
           break;
       }
       closeCheck();
+      $("#check_backdrop").css("pointer-events", "auto");
     },
-    error: () => alert("網路錯誤"),
+    error: () => {
+      alert("網路錯誤");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
   });
 };
 
@@ -303,7 +335,7 @@ const showCheck = (action, id) => {
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" onclick="editName(${id})" type="button">
+            <button class="button_group" id="confirm" onclick="editName(${id})" type="button">
                 確認
             </button>
         </div>
@@ -326,7 +358,7 @@ const showCheck = (action, id) => {
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" onclick="switchOn(${id})" type="button">
+            <button class="button_group" id="confirm" onclick="switchOn(${id})" type="button">
                 確認
             </button>
         </div>
@@ -349,7 +381,7 @@ const showCheck = (action, id) => {
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" onclick="switchOff(${id})" type="button">
+            <button class="button_group" id="confirm" onclick="switchOff(${id})" type="button">
                 確認
             </button>
         </div>
@@ -372,7 +404,7 @@ const showCheck = (action, id) => {
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" onclick="switchOnline(${id})" type="button">
+            <button class="button_group" id="confirm" onclick="switchOnline(${id})" type="button">
                 確認
             </button>
         </div>
@@ -395,7 +427,7 @@ const showCheck = (action, id) => {
             <button class="button_group" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" onclick="setFormula(${id})" type="button">
+            <button class="button_group" id="confirm" onclick="setFormula(${id})" type="button">
                 確認
             </button>
         </div>
