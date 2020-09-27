@@ -9,10 +9,10 @@
 
     <div class="container">
         <div class="control_header">
-            <button class="button_group control_button" onclick="switchTab(0)" type="button">
+            <button class="button_group control_button" type="button">
                 開 / 關
             </button>
-            <button class="button_group control_button" onclick="switchTab(1)" type="button">
+            <button class="button_group control_button" onclick="window.location.href='./history.php'" type="button">
                 歷史資訊
             </button>
             <button class="button_group control_button" onclick="logOut()" type="button">
@@ -37,23 +37,8 @@
                         <th class="table_head_th" scope="col">設備狀態</th>
                     </tr>
                 </thead>
-                <tbody class="table_body">
-                    <tr class="table_body_tr">
-                        <td class="table_body_td">1</td>
-                        <td class="table_body_td">
-                            <button class="button_group" onclick="switchOn(1)" type="button">
-                                ON
-                            </button>
-                            <button class="button_group" onclick="switchOff(1)" type="button">
-                                OFF
-                            </button>
-                        </td>
-                        <td class="table_body_td">
-                            <button class="button_group control_online" onclick="switchOnline(1)" type="button">
-                                上線
-                            </button>
-                        </td>
-                    </tr>
+                <!-- php_control_page/js/control.js -->
+                <tbody class="table_body" id="table_body">
                 </tbody>
             </table>
         </div>
@@ -61,3 +46,6 @@
         <p>請連線至WiFi: powerAP / 1234567890</p>
     </div>
 </div>
+
+<!-- Modal  -->
+<script type="text/javascript" src="php_control_page/components/modal.js"></script>

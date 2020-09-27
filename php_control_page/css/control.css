@@ -1,0 +1,45 @@
+.control_header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.control_button {
+  background: #a4d000;
+  padding: 8px;
+  width: 100px;
+}
+
+.control_setting {
+  background: none;
+  border-radius: 100px;
+  min-width: 0;
+  padding: 5px;
+}
+
+.control_setting:focus {
+  border-radius: 100px;
+}
+
+.control_svg {
+  color: #1979a9;
+  margin: 0;
+}
+
+.control_online {
+  margin: 0;
+}
+
+.control_form {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.control_text {
+  margin: 15px;
+}
+
+p {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

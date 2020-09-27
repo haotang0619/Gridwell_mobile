@@ -1,0 +1,38 @@
+.modal_group {
+  display: none;
+}
+
+.modal_container {
+  background-color: transparent;
+  bottom: 0px;
+  display: flex;
+  left: 0px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  z-index: 1300;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.modal_box {
+  background: white;
+  border: 2px solid #1979a9;
+  border-radius: 4px;
+  margin: auto;
+  max-width: 40%;
+  min-height: 200px;
+  min-width: 400px;
+  z-index: 1700;
+}
+
+.modal_backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0px;
+  display: flex;
+  left: 0px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  z-index: 1500;
+  -webkit-tap-highlight-color: transparent;
+}
