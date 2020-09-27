@@ -9,10 +9,10 @@
 
     <div class="container">
         <div class="history_header">
-            <button class="button_group history_button" onclick="switchTab(0)" type="button">
+            <button class="button_group history_button" onclick="window.location.href='control.php'" type="button">
                 開 / 關
             </button>
-            <button class="button_group history_button" onclick="switchTab(1)" type="button">
+            <button class="button_group history_button" type="button">
                 歷史資訊
             </button>
             <button class="button_group history_button" onclick="logOut()" type="button">
