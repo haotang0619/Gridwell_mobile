@@ -78,13 +78,19 @@ $.ajax({
 });
 
 const closeModal = () => {
-  $(".modal_group").css("display", "none");
+  $("#modal").css("display", "none");
 };
 
 const editNameOpen = (id) => {
   const name = $(`#name_${id}`).html();
 
-  $(".modal_group").css("display", "block");
+  $("#modal").css("display", "block");
+  const header = `
+    <div class="control_form">
+        <h2 class="control_text">編輯名稱</h2>
+    </div>
+  `;
+
   const form = `
     <div class="control_form">
         <span class="control_text">名稱</span>
@@ -100,15 +106,16 @@ const editNameOpen = (id) => {
         <button class="button_group" onclick="closeModal()" type="button">
             取消
         </button>
-        <button class="button_group" onclick="editName(${id})" type="button">
-            確認
+        <button class="button_group" onclick="showCheck('name', ${id})" type="button">
+            送出
         </button>
     </div>
   `;
 
-  $(".modal_box").empty();
-  $(".modal_box").append(form);
-  $(".modal_box").append(buttons);
+  $("#modal_box").empty();
+  $("#modal_box").append(header);
+  $("#modal_box").append(form);
+  $("#modal_box").append(buttons);
 };
 
 const editName = (id) => {
@@ -127,6 +134,7 @@ const editName = (id) => {
       const message = JSON.parse(data);
       if (message.success) {
         $(`#name_${id}`).text(name);
+        closeCheck();
         closeModal();
       } else {
         alert("網路錯誤");
@@ -136,4 +144,37 @@ const editName = (id) => {
       alert("網路錯誤");
     },
   });
+};
+
+const closeCheck = () => {
+  $("#check").css("display", "none");
+};
+
+const showCheck = (action, id) => {
+  $("#check").css("display", "block");
+
+  switch (action) {
+    case "name":
+      const text = `
+        <div class="control_form">
+            <span class="control_text">確認要更改此設備的名稱嗎？</span>
+        </div>
+      `;
+
+      const buttons = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" onclick="editName(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text);
+      $("#check_box").append(buttons);
+      break;
+  }
 };
