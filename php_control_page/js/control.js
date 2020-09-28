@@ -36,7 +36,7 @@ const init = () => {
                 <button class="button_group" onclick="switchOffOpen(${mes.id})" type="button">
                     OFF
                 </button>
-                <span id="on_off_${mes.id}">-</span>
+                <span id="on_off_${mes.id}">--</span>
             </td>
           `;
             break;
@@ -174,7 +174,7 @@ const switchOn = (id) => {
       nodeid: id,
     },
     success: () => {
-      $(`#on_off_${id}`).text("1");
+      $(`#on_off_${id}`).text("On");
       closeCheck();
       $("#check_backdrop").css("pointer-events", "auto");
     },
@@ -202,7 +202,7 @@ const switchOff = (id) => {
       nodeid: id,
     },
     success: () => {
-      $(`#on_off_${id}`).text("0");
+      $(`#on_off_${id}`).text("Off");
       closeCheck();
       $("#check_backdrop").css("pointer-events", "auto");
     },
@@ -232,18 +232,13 @@ const switchOnline = (id) => {
     success: (data) => {
       switch (data) {
         case "Unknown":
-          $(`#on_off_${id}`).text("-");
+          $(`#on_off_${id}`).text("--");
           $(`#status_${id}`).html("未知");
           break;
 
-        case "":
-          $(`#on_off_${id}`).text("0");
-          $(`#status_${id}`).html("上線");
-          break;
-
         default:
-          $(`#on_off_${id}`).text("1");
-          $(`#status_${id}`).html("離線");
+          $(`#on_off_${id}`).text("On");
+          $(`#status_${id}`).html("上線");
           break;
       }
       closeCheck();
