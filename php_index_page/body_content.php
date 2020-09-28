@@ -20,7 +20,7 @@
         <div class="index_form">
             <span class="index_text">密碼</span>
             <div class="input_group">
-                <input type="text" class="input_area" id="password" onkeyup="submit(event)" required />
+                <input type="password" class="input_area" id="password" onkeyup="submit(event)" required />
                 <label for="password" class="input_label">輸入密碼</label>
             </div>
         </div>

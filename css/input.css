@@ -14,6 +14,7 @@
 }
 
 .input_group .input_area:valid + .input_label {
+  background: #fff !important;
   color: #8d8d8d;
   font-size: 14px;
   padding: 0 3px;
@@ -25,6 +26,7 @@
 }
 
 .input_group .input_area:focus + .input_label {
+  background: #fff !important;
   color: #1979a9;
   font-size: 14px;
   padding: 0 3px;
@@ -38,6 +40,10 @@
   position: absolute;
   top: 13px;
   transition: 0.1s;
+}
+
+.input_group .input_area:-webkit-autofill + .input_label {
+  background: #e8f0fe;
 }
 
 .input_group .input_helper {
