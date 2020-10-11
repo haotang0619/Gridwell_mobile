@@ -26,11 +26,12 @@ $.ajax({
   success: (data) => {
     const message = JSON.parse(data);
     if (message.valid) {
-      if (window.location.pathname === "/Gridwell_mobile/") {
+      if (window.location.pathname === "/IoT/") {
         window.location.href = "./control.php";
       }
     } else {
-      if (window.location.pathname !== "/Gridwell_mobile/") {
+      if (window.location.pathname !== "/IoT/") {
+        alert(window.location.pathname);
         alert("您尚未登入！");
         window.location.href = "./";
       }

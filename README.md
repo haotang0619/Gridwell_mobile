@@ -1,4 +1,4 @@
-# Gridwell_mobile
+# Gridwell_mobile (IoT)
 
 This is a mobile web frontend for Gridwell (Test version on Hao Tang's github)<br>
 <br>

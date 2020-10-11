@@ -2,7 +2,7 @@
 $acc = $_POST["acc"];
 $pwd = $_POST["pwd"];
 
-include $_SERVER["DOCUMENT_ROOT"] . "/Gridwell_mobile/api/mysql.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/IoT/api/mysql.php";
 
 $conn = new mysqli($server_name, $username, $password, 'Mobile', $port);
 if ($conn->connect_error) {
