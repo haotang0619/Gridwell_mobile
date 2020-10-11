@@ -1,3 +1,7 @@
+body {
+  background: linear-gradient(#c6d5e4, #69737b);
+}
+
 .container {
   box-sizing: border-box;
   display: block;
