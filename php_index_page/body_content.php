@@ -14,7 +14,7 @@
             <span class="index_text">帳號</span>
             <div class="input_group">
                 <input type="text" class="input_area" id="account" onkeyup="submit(event)" required />
-                <fieldset class="input_field">
+                <fieldset class="input_field index_field">
                     <legend class="input_legend index_legend">輸入帳號</legend>
                 </fieldset>
             </div>
@@ -23,7 +23,7 @@
             <span class="index_text">密碼</span>
             <div class="input_group">
                 <input type="password" class="input_area" id="password" onkeyup="submit(event)" required />
-                <fieldset class="input_field">
+                <fieldset class="input_field index_field">
                     <legend class="input_legend index_legend">輸入密碼</legend>
                 </fieldset>
             </div>

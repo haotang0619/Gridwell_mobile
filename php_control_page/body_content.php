@@ -25,7 +25,9 @@
                 <option value=""></option>
                 <option value="1" selected>1</option>
             </select>
-            <label class="select_label">選擇場域</label>
+            <fieldset class="select_field">
+                <legend class="select_legend">選擇場域</legend>
+            </fieldset>
         </div>
 
         <div class="table_group">

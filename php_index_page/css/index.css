@@ -20,6 +20,14 @@
   margin: 15px;
 }
 
+.input_group .index_field {
+  border-color: #092939;
+}
+
+.input_group .index_field .index_legend {
+  color: #092939;
+}
+
 .input_group .input_area:valid + .input_field .index_legend {
   color: #092939;
 }
