@@ -55,11 +55,18 @@
 
 .select_text:valid ~ .select_label,
 .select_text:focus ~ .select_label {
-  background: #fff;
-  color: #8d8d8d;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 20%,
+    #fff 50%,
+    transparent 80%,
+    transparent 100%
+  ) !important;
+  border-radius: 100%;
+  color: #555;
   font-size: 14px;
-  padding: 0 3px;
-  top: -12px;
+  padding: 10px 3px;
+  top: -20px;
   transition: 0.2s ease all;
 }
 

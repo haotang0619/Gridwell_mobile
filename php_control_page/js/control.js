@@ -109,7 +109,7 @@ const editNameOpen = (id) => {
   $("#modal").css("display", "block");
   const header = `
     <div class="control_form">
-        <h2 class="control_text">編輯名稱</h2>
+        <h2 class="control_text">編輯資訊</h2>
     </div>
   `;
 
@@ -395,7 +395,7 @@ const showCheck = (action, id) => {
     case "name":
       const text1 = `
         <div class="control_form">
-            <span class="control_text">確認要更改此設備的名稱嗎？</span>
+            <span class="control_text">確認要更改此設備的資訊嗎？</span>
         </div>
       `;
 

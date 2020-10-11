@@ -9,16 +9,24 @@
   border-radius: 5px;
   font-size: 18px;
   outline: none;
-  padding: 16px 13px;
+  padding: 16px 13px 13px;
   width: 200px;
 }
 
-.input_group .input_area:valid + .input_label {
-  background: #fff !important;
-  color: #8d8d8d;
-  font-size: 14px;
-  padding: 0 3px;
-  top: -8px;
+.input_group .input_area:valid + .input_label,
+.input_group .input_area:focus + .input_label {
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 20%,
+    #fff 50%,
+    transparent 80%,
+    transparent 100%
+  ) !important;
+  border-radius: 100%;
+  color: #555;
+  font-size: 13px;
+  padding: 10px 5px;
+  top: -18px;
 }
 
 .input_group .input_area:focus {
@@ -26,11 +34,7 @@
 }
 
 .input_group .input_area:focus + .input_label {
-  background: #fff !important;
   color: #1979a9;
-  font-size: 14px;
-  padding: 0 3px;
-  top: -8px;
 }
 
 .input_group .input_label {
