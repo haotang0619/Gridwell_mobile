@@ -8,7 +8,7 @@
     <!-- Nav bar end-->
 
     <div class="container">
-        <img alt="logo" src="images/login.jpg">
+        <img alt="logo" src="/IoT/images/login.jpg">
         <h5 class="index_title">IoT監測控制系統</h5>
         <div class="index_form">
             <span class="index_text">帳號</span>

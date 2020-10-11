@@ -1,7 +1,7 @@
 // Init table
 const init = () => {
   $.ajax({
-    url: "php_control_page/api/get_table.php",
+    url: "/IoT/php_control_page/api/get_table.php",
     type: "POST",
     dateType: "text",
     data: {
@@ -130,7 +130,7 @@ const editName = (id) => {
   $("#confirm").prepend(loadingIcon());
 
   $.ajax({
-    url: "php_control_page/api/edit_name.php",
+    url: "/IoT/php_control_page/api/edit_name.php",
     type: "POST",
     dateType: "text",
     data: {

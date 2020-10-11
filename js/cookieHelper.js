@@ -16,7 +16,7 @@ const deleteCookie = (name = "accessToken") => {
 // Check login
 const accessToken = getCookie();
 $.ajax({
-  url: "api/check_login.php",
+  url: "/IoT/api/check_login.php",
   type: "POST",
   dateType: "text",
   async: false,
@@ -26,14 +26,17 @@ $.ajax({
   success: (data) => {
     const message = JSON.parse(data);
     if (message.valid) {
-      if (window.location.pathname === "/IoT/") {
-        window.location.href = "./control.php";
+      if (
+        window.location.pathname.toLowerCase().replaceAll("/", "") === "iot"
+      ) {
+        window.location.href = "/IoT/control.php";
       }
     } else {
-      if (window.location.pathname !== "/IoT/") {
-        alert(window.location.pathname);
+      if (
+        window.location.pathname.toLowerCase().replaceAll("/", "") !== "iot"
+      ) {
         alert("您尚未登入！");
-        window.location.href = "./";
+        window.location.href = "/IoT/";
       }
     }
   },
@@ -42,5 +45,5 @@ $.ajax({
 
 const logOut = () => {
   deleteCookie();
-  window.location.href = "./";
+  window.location.href = "/IoT/";
 };

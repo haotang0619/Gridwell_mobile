@@ -13,7 +13,7 @@ const logIn = () => {
   $("#submit").prepend(loadingIcon());
 
   $.ajax({
-    url: "php_index_page/api/log_in.php",
+    url: "/IoT/php_index_page/api/log_in.php",
     type: "POST",
     dateType: "text",
     data: {
@@ -24,7 +24,7 @@ const logIn = () => {
       const message = JSON.parse(data);
       if (message.valid) {
         setCookie("accessToken", message.token, 1);
-        window.location.href = "./control.php";
+        window.location.href = "/IoT/control.php";
       } else {
         $(".index_error").css("display", "block");
         $("#submit").html("送出");
