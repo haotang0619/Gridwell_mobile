@@ -1,9 +1,8 @@
 <?php
 $field = $_POST["field"];
 $id = $_POST["id"];
-$name = $_POST["name"];
-$IP = $_POST["IP"];
-$port_edit = $_POST["port"];
+$new_a = $_POST["new_a"];
+$new_b = $_POST["new_b"];
 
 include $_SERVER["DOCUMENT_ROOT"] . "/IoT/api/mysql.php";
 
@@ -13,7 +12,7 @@ if ($conn->connect_error) {
 }
 mysqli_query($conn, "set character set utf8");
 
-$search = "UPDATE `mobile_$field` SET `name` = '$name', `IP` = '$IP', `port` = $port_edit WHERE `id` = $id";
+$search = "UPDATE `mobile_$field` SET `a` = '$new_a', `b` = '$new_b' WHERE `id` = $id";
 $result = $conn->query($search);
 if ($result) {
     $message = array("success" => true);

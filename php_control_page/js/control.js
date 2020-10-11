@@ -16,6 +16,8 @@ const init = () => {
         let name = `
         <td class="table_body_td control_name_td">
         <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
+        <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
+        <span style="display: none" id="port_${mes.id}">${mes.port}</span>
       `;
         name += `
             <button class="button_group control_setting" onclick="editNameOpen(${
@@ -44,6 +46,8 @@ const init = () => {
           case "1":
             content += `
                 <span id="value_${mes.id}">2.5</span>
+                <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
+                <span style="display: none" id="old_b_${mes.id}">${mes.b}</span>
                 <button class="button_group control_setting" onclick="setFormulaOpen(${
                   mes.id
                 })" type="button">
@@ -87,8 +91,20 @@ const closeModal = () => {
   $("#modal").css("display", "none");
 };
 
+const logOutOpen = () => {
+  showCheck("log_out");
+};
+
+const logOutLoading = () => {
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
+  logOut();
+};
+
 const editNameOpen = (id) => {
   const name = $(`#name_${id}`).html();
+  const IP = $(`#IP_${id}`).html();
+  const port = $(`#port_${id}`).html();
 
   $("#modal").css("display", "block");
   const header = `
@@ -103,6 +119,20 @@ const editNameOpen = (id) => {
         <div class="input_group">
             <input type="text" class="input_area" id="new_name" value="${name}" required />
             <label for="new_name" class="input_label">輸入名稱</label>
+        </div>
+    </div>
+    <div class="control_form">
+        <span class="control_text">IP位址</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_IP" value="${IP}" required />
+            <label for="new_name" class="input_label">輸入IP位址</label>
+        </div>
+    </div>
+    <div class="control_form">
+        <span class="control_text">通訊埠</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_port" value="${port}" required />
+            <label for="new_name" class="input_label">輸入通訊埠</label>
         </div>
     </div>
   `;
@@ -126,6 +156,8 @@ const editNameOpen = (id) => {
 
 const editName = (id) => {
   const name = $("#new_name").val();
+  const IP = $("#new_IP").val();
+  const port = $("#new_port").val();
   $("#check_backdrop").css("pointer-events", "none");
   $("#confirm").prepend(loadingIcon());
 
@@ -137,11 +169,15 @@ const editName = (id) => {
       field: 1,
       id,
       name,
+      IP,
+      port,
     },
     success: (data) => {
       const message = JSON.parse(data);
       if (message.success) {
         $(`#name_${id}`).text(name);
+        $(`#IP_${id}`).text(IP);
+        $(`#port_${id}`).text(port);
         closeCheck();
         closeModal();
       } else {
@@ -253,6 +289,9 @@ const switchOnline = (id) => {
 };
 
 const setFormulaOpen = (id) => {
+  const old_a = $(`#old_a_${id}`).html();
+  const old_b = $(`#old_b_${id}`).html();
+
   $("#modal").css("display", "block");
   const header = `
     <div class="control_form">
@@ -264,14 +303,14 @@ const setFormulaOpen = (id) => {
     <div class="control_form">
         <span class="control_text">a</span>
         <div class="input_group">
-            <input type="text" class="input_area" id="new_a" onkeyup="changeFormula()" value=1 required />
+            <input type="text" class="input_area" id="new_a" onkeyup="changeFormula()" value="${old_a}" required />
             <label for="new_a" class="input_label">輸入a值</label>
         </div>
     </div>
     <div class="control_form">
         <span class="control_text">b</span>
         <div class="input_group">
-            <input type="text" class="input_area" id="new_b" onkeyup="changeFormula()" value=1 required />
+            <input type="text" class="input_area" id="new_b" onkeyup="changeFormula()" value="${old_b}" required />
             <label for="new_b" class="input_label">輸入b值</label>
         </div>
     </div>
@@ -280,7 +319,7 @@ const setFormulaOpen = (id) => {
   const text = `
     <div class="control_form">
         <span class="control_text">
-            <span id="text_a">1</span> X + <span id="text_b">1</span>
+            <span id="text_a">${old_a}</span> X + <span id="text_b">${old_b}</span>
         </span>
     </div>
   `;
@@ -309,9 +348,40 @@ const changeFormula = () => {
 };
 
 const setFormula = (id) => {
-  console.log(`setFormula(${id})`);
-  closeCheck();
-  closeModal();
+  const new_a = $("#new_a").val();
+  const new_b = $("#new_b").val();
+  $("#check_backdrop").css("pointer-events", "none");
+  $("#confirm").prepend(loadingIcon());
+
+  $.ajax({
+    url: "/IoT/php_control_page/api/edit_formula.php",
+    type: "POST",
+    dateType: "text",
+    data: {
+      field: 1,
+      id,
+      new_a,
+      new_b,
+    },
+    success: (data) => {
+      const message = JSON.parse(data);
+      if (message.success) {
+        $(`#old_a_${id}`).text(new_a);
+        $(`#old_b_${id}`).text(new_b);
+        closeCheck();
+        closeModal();
+      } else {
+        alert("網路錯誤");
+        $("#confirm").html("確認");
+      }
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
+    error: () => {
+      alert("網路錯誤");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
+  });
 };
 
 const closeCheck = () => {
@@ -414,7 +484,7 @@ const showCheck = (action, id) => {
       $("#check_box").append(buttons4);
       break;
 
-    default:
+    case "formula":
       const text5 = `
         <div class="control_form">
             <span class="control_text">確認要更改此設備的公式嗎？</span>
@@ -435,6 +505,29 @@ const showCheck = (action, id) => {
       $("#check_box").empty();
       $("#check_box").append(text5);
       $("#check_box").append(buttons5);
+      break;
+
+    case "log_out":
+      const text6 = `
+        <div class="control_form">
+            <span class="control_text">確認要登出嗎？</span>
+        </div>
+      `;
+
+      const buttons6 = `
+        <div class="control_form">
+            <button class="button_group" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button class="button_group" id="confirm" onclick="logOutLoading()" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text6);
+      $("#check_box").append(buttons6);
       break;
   }
 };

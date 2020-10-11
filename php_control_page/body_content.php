@@ -15,7 +15,7 @@
             <button class="button_group control_button" onclick="window.location.href='/IoT/history.php'" type="button">
                 歷史資訊
             </button>
-            <button class="button_group control_button" onclick="logOut()" type="button">
+            <button class="button_group control_button" onclick="logOutOpen()" type="button">
                 登出
             </button>
         </div>

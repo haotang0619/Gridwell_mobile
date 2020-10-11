@@ -62,6 +62,7 @@
 .control_text {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   margin: 15px;
+  min-width: 50px;
 }
 
 p {
