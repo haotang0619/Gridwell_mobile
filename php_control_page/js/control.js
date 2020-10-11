@@ -1,5 +1,5 @@
 // Init table
-const init = () => {
+const init_table = () => {
   $.ajax({
     url: "/IoT/php_control_page/api/get_table.php",
     type: "POST",
@@ -14,68 +14,72 @@ const init = () => {
       message.forEach((mes) => {
         const tr_start = `<tr class="table_body_tr">`;
         let name = `
-        <td class="table_body_td control_name_td">
-        <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
-        <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
-        <span style="display: none" id="port_${mes.id}">${mes.port}</span>
-      `;
+          <td class="table_body_td control_name_td">
+            <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
+            <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
+            <span style="display: none" id="port_${mes.id}">${mes.port}</span>
+        `;
         name += `
-            <button class="button_group control_setting" onclick="editNameOpen(${
-              mes.id
-            })" type="button">
-                ${editIcon("button_svg control_svg")}
-            </button>
-        </td>
-      `;
+              <button class="button_group control_setting" onclick="editNameOpen(${
+                mes.id
+              })" type="button">
+                  ${editIcon("button_svg control_svg")}
+              </button>
+          </td>
+        `;
 
         let content = `<td class="table_body_td">`;
         switch (mes.type) {
           case "0":
             content += `
-                <button class="button_group" onclick="switchOnOpen(${mes.id})" type="button">
-                    ON
-                </button>
-                <button class="button_group" onclick="switchOffOpen(${mes.id})" type="button">
-                    OFF
-                </button>
-                <span id="on_off_${mes.id}">--</span>
-            </td>
-          `;
+                  <button class="button_group" onclick="switchOnOpen(${mes.id})" type="button">
+                      ON
+                  </button>
+                  <button class="button_group" onclick="switchOffOpen(${mes.id})" type="button">
+                      OFF
+                  </button>
+                  <span id="on_off_${mes.id}">--</span>
+              </td>
+            `;
             break;
 
           case "1":
             content += `
-                <span id="value_${mes.id}">2.5</span>
-                <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
-                <span style="display: none" id="old_b_${mes.id}">${mes.b}</span>
-                <button class="button_group control_setting" onclick="setFormulaOpen(${
-                  mes.id
-                })" type="button">
-                ${settingIcon("button_svg control_svg")}
-                </button>
-            </td>
-          `;
+                  <span id="value_${mes.id}">2.5</span>
+                  <span style="display: none" id="old_a_${mes.id}">${
+              mes.a
+            }</span>
+                  <span style="display: none" id="old_b_${mes.id}">${
+              mes.b
+            }</span>
+                  <button class="button_group control_setting" onclick="setFormulaOpen(${
+                    mes.id
+                  })" type="button">
+                  ${settingIcon("button_svg control_svg")}
+                  </button>
+              </td>
+            `;
             break;
 
           default:
             content += `
-                <button class="button_group" onclick="viewVideo(${mes.id})" type="button">
-                    查看
-                </button>
-                <button class="button_group" onclick="editIP(${mes.id})" type="button">
-                    編輯
-                </button>
-            </td>
-          `;
+                  <button class="button_group" onclick="viewVideo(${mes.id})" type="button">
+                      查看
+                  </button>
+                  <button class="button_group" onclick="editIP(${mes.id})" type="button">
+                      編輯
+                  </button>
+              </td>
+            `;
             break;
         }
         const status = `
-        <td class="table_body_td">
-            <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
-                更新
-            </button>
-        </td>
-      `;
+          <td class="table_body_td">
+              <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
+                  更新
+              </button>
+          </td>
+        `;
         const tr_end = `</tr>`;
 
         $("#table_body").append(

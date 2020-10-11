@@ -21,9 +21,11 @@
         </div>
 
         <div class="select_group">
-            <select class="select_text" required>
-                <option value=""></option>
-                <option value="1" selected>1</option>
+            <select class="select_text" id="select_field" required>
+                <option value="" selected></option>
+                <script type="text/javascript">
+                    init_select();
+                </script>
             </select>
             <fieldset class="select_field">
                 <legend class="select_legend">選擇場域</legend>
@@ -45,7 +47,7 @@
                     <script type="text/javascript">
                         $("#table_body").append("<td></td>");
                         $("#table_body").append(loadingIcon("control_loading"));
-                        init();
+                        init_table();
                     </script>
                 </tbody>
             </table>

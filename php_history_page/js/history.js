@@ -1,5 +1,5 @@
 // Init table
-const init = () => {
+const init_table = () => {
   $.ajax({
     url: "/IoT/php_history_page/api/get_table.php",
     type: "POST",

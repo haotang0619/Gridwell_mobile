@@ -18,6 +18,7 @@
 
 <!-- General js  -->
 <script type="text/javascript" src="/IoT/js/jquery.min.js"></script>
+<script type="text/javascript" src="/IoT/js/init_select.js"></script>
 
 <!-- Check login js  -->
 <script type="text/javascript" src="/IoT/js/cookieHelper.js"></script>
