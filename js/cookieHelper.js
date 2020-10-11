@@ -15,6 +15,7 @@ const deleteCookie = (name = "accessToken") => {
 
 // Check login
 const accessToken = getCookie();
+let acc;
 $.ajax({
   url: "/IoT/api/check_login.php",
   type: "POST",
@@ -26,6 +27,7 @@ $.ajax({
   success: (data) => {
     const message = JSON.parse(data);
     if (message.valid) {
+      acc = message.acc;
       if (
         window.location.pathname.toLowerCase().replaceAll("/", "") === "iot"
       ) {

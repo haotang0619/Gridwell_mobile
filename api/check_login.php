@@ -23,7 +23,7 @@ $result = $conn->query($search);
 if (mysqli_num_rows($result)) {
     $res = $result->fetch_assoc();
     if ($token === hash("sha256", $res["password"])) {
-        $message = array("valid" => true);
+        $message = array("acc" => $res["name"] ,"valid" => true);
     } else {
         $message = array("valid" => false);
     }

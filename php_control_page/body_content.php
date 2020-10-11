@@ -2,7 +2,13 @@
     <!-- Nav bar start-->
     <header class="nav_group">
         <div class="nav_inside">
-            <h6 class="nav_title">自動開關控制頁面</h6>
+            <h6 class="nav_title" id = "nav_title">自動開關控制頁面</h6>
+            <script type="text/javascript">
+                // From "/IoT/js/cookieHelper.js":
+                $("#nav_title").append(`
+                    <span style="position: absolute; right: 24px">使用者：${acc}<span>
+                `)
+            </script>
         </div>
     </header>
     <!-- Nav bar end-->
