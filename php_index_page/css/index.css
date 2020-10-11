@@ -20,8 +20,12 @@
   margin: 15px;
 }
 
+.input_group .input_area:valid + .input_field .index_legend {
+  color: #092939;
+}
+
 .index_error {
-  color: red;
+  color: #900;
   display: none;
 }
 

@@ -118,21 +118,27 @@ const editNameOpen = (id) => {
         <span class="control_text">名稱</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_name" value="${name}" required />
-            <label for="new_name" class="input_label">輸入名稱</label>
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入名稱</legend>
+            </fieldset>
         </div>
     </div>
     <div class="control_form">
         <span class="control_text">IP位址</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_IP" value="${IP}" required />
-            <label for="new_name" class="input_label">輸入IP位址</label>
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入IP</legend>
+            </fieldset>
         </div>
     </div>
     <div class="control_form">
         <span class="control_text">通訊埠</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_port" value="${port}" required />
-            <label for="new_name" class="input_label">輸入通訊埠</label>
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入通訊埠</legend>
+            </fieldset>
         </div>
     </div>
   `;
@@ -304,14 +310,18 @@ const setFormulaOpen = (id) => {
         <span class="control_text">a</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_a" onkeyup="changeFormula()" value="${old_a}" required />
-            <label for="new_a" class="input_label">輸入a值</label>
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入a值</legend>
+            </fieldset>
         </div>
     </div>
     <div class="control_form">
         <span class="control_text">b</span>
         <div class="input_group">
             <input type="text" class="input_area" id="new_b" onkeyup="changeFormula()" value="${old_b}" required />
-            <label for="new_b" class="input_label">輸入b值</label>
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入b值</legend>
+            </fieldset>
         </div>
     </div>
   `;

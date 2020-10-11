@@ -8,20 +8,24 @@
     <!-- Nav bar end-->
 
     <div class="container">
-        <img alt="logo" style="max-width: 350px" src="/IoT/images/login.jpg">
+        <img alt="logo" style="max-width: 300px" src="/IoT/images/login.jpg">
         <h5 class="index_title">IoT監測控制系統</h5>
         <div class="index_form">
             <span class="index_text">帳號</span>
             <div class="input_group">
                 <input type="text" class="input_area" id="account" onkeyup="submit(event)" required />
-                <label for="account" class="input_label">輸入帳號</label>
+                <fieldset class="input_field">
+                    <legend class="input_legend index_legend">輸入帳號</legend>
+                </fieldset>
             </div>
         </div>
         <div class="index_form">
             <span class="index_text">密碼</span>
             <div class="input_group">
                 <input type="password" class="input_area" id="password" onkeyup="submit(event)" required />
-                <label for="password" class="input_label">輸入密碼</label>
+                <fieldset class="input_field">
+                    <legend class="input_legend index_legend">輸入密碼</legend>
+                </fieldset>
             </div>
         </div>
         <div class="index_form index_error">
