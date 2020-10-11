@@ -1,0 +1,42 @@
+.history_header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.history_button {
+  background: #a4d000;
+  padding: 8px;
+  width: 100px;
+}
+
+.history_loading {
+  height: 40px !important;
+  margin: 20px;
+  width: 40px !important;
+}
+
+.history_form {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.history_text {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin: 15px;
+  min-width: 50px;
+}
+
+.history_check {
+  z-index: 1400;
+}
+
+.history_check_box {
+  min-width: 250px;
+  min-height: 50px;
+}
+
+p {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

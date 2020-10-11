@@ -9,44 +9,49 @@
 
     <div class="container">
         <div class="history_header">
-            <button class="button_group history_button" onclick="window.location.href='control.php'" type="button">
+            <button class="button_group history_button" onclick="window.location.href='/IoT/control.php'" type="button">
                 開 / 關
             </button>
             <button class="button_group history_button" type="button">
                 歷史資訊
             </button>
-            <button class="button_group history_button" onclick="logOut()" type="button">
+            <button class="button_group history_button" onclick="logOutOpen()" type="button">
                 登出
             </button>
         </div>
 
         <div class="select_group">
-            <select class="select_text" onchange="switchImage()" required>
+            <select class="select_text" required>
                 <option value=""></option>
                 <option value="1" selected>1</option>
             </select>
-            <label class="select_label">選擇場域</label>
+            <fieldset class="select_field">
+                <legend class="select_legend">選擇場域</legend>
+            </fieldset>
         </div>
 
         <div class="table_group">
             <table class="table_root" aria-label="table">
                 <thead class="table_head">
                     <tr class="table_head_tr">
-                        <th class="table_head_th" scope="col">編號</th>
-                        <th class="table_head_th" scope="col">設備ID</th>
-                        <th class="table_head_th" scope="col">操作者</th>
                         <th class="table_head_th" scope="col">操作時間</th>
+                        <th class="table_head_th" scope="col">操作設備</th>
+                        <th class="table_head_th" scope="col">操作紀錄</th>
                     </tr>
                 </thead>
-                <tbody class="table_body">
-                    <tr class="table_body_tr">
-                        <td class="table_body_td">1</td>
-                        <td class="table_body_td">機具1</td>
-                        <td class="table_body_td">王大明</td>
-                        <td class="table_body_td">109/05/06 10:20</td>
-                    </tr>
+                <!-- php_history_page/js/history.js -->
+                <!-- Loading Icon show first -->
+                <tbody class="table_body" id="table_body">
+                    <script type="text/javascript">
+                        $("#table_body").append("<td></td>");
+                        $("#table_body").append(loadingIcon("history_loading"));
+                        init();
+                    </script>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<!-- Modal  -->
+<script type="text/javascript" src="/IoT/php_history_page/components/modal.js"></script>
