@@ -12,6 +12,6 @@ const init_select = () => {
         `);
       });
     },
-    error: () => alert("網路錯誤"),
+    error: () => alert("網路錯誤，請重試！"),
   });
 };

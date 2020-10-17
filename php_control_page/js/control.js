@@ -45,7 +45,7 @@ const init_table = () => {
 
           case "1":
             content += `
-                  <span id="value_${mes.id}">2.5</span>
+                  <span id="value_${mes.id}">--</span>
                   <span style="display: none" id="old_a_${mes.id}">${
               mes.a
             }</span>
@@ -57,6 +57,7 @@ const init_table = () => {
                   })" type="button">
                   ${settingIcon("button_svg control_svg")}
                   </button>
+                  <span id="on_off_${mes.id}">--</span>
               </td>
             `;
             break;
@@ -87,7 +88,7 @@ const init_table = () => {
         );
       });
     },
-    error: () => alert("網路錯誤"),
+    error: () => alert("網路錯誤，請重試！"),
   });
 };
 
@@ -101,6 +102,8 @@ const logOutOpen = () => {
 
 const logOutLoading = () => {
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
   logOut();
 };
@@ -169,6 +172,8 @@ const editName = (id) => {
   const IP = $("#new_IP").val();
   const port = $("#new_port").val();
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
 
   $.ajax({
@@ -191,13 +196,17 @@ const editName = (id) => {
         closeCheck();
         closeModal();
       } else {
-        alert("網路錯誤");
+        alert("網路錯誤，請重試！");
+        enableButton("cancel");
+        enableButton("confirm");
         $("#confirm").html("確認");
       }
       $("#check_backdrop").css("pointer-events", "auto");
     },
     error: () => {
-      alert("網路錯誤");
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
       $("#confirm").html("確認");
       $("#check_backdrop").css("pointer-events", "auto");
     },
@@ -210,26 +219,40 @@ const switchOnOpen = (id) => {
 
 const switchOn = (id) => {
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
 
-  $.ajax({
-    url: "http://111.185.9.227:3008/onn",
-    type: "GET",
-    dateType: "jsonp",
-    data: {
-      nodeid: id,
-    },
-    success: () => {
-      $(`#on_off_${id}`).text("On");
-      closeCheck();
-      $("#check_backdrop").css("pointer-events", "auto");
-    },
-    error: () => {
-      alert("網路錯誤");
+  let flag = false;
+  const sendCommand = (i) => {
+    if (flag) return;
+    $.ajax({
+      url: "http://111.185.9.227:3008/onn",
+      type: "GET",
+      dateType: "jsonp",
+      data: {
+        nodeid: id,
+      },
+      async: false,
+      success: (data) => {
+        if (data === "OK") {
+          getSwitchStatus(id, "onn");
+          flag = true;
+        }
+      },
+    });
+    if (!flag && i === 4) {
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
       $("#confirm").html("確認");
       $("#check_backdrop").css("pointer-events", "auto");
-    },
-  });
+    }
+  };
+
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => sendCommand(i), i * 1000);
+  }
 };
 
 const switchOffOpen = (id) => {
@@ -238,26 +261,40 @@ const switchOffOpen = (id) => {
 
 const switchOff = (id) => {
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
 
-  $.ajax({
-    url: "http://111.185.9.227:3008/off",
-    type: "GET",
-    dateType: "jsonp",
-    data: {
-      nodeid: id,
-    },
-    success: () => {
-      $(`#on_off_${id}`).text("Off");
-      closeCheck();
-      $("#check_backdrop").css("pointer-events", "auto");
-    },
-    error: () => {
-      alert("網路錯誤");
+  let flag = false;
+  const sendCommand = (i) => {
+    if (flag) return;
+    $.ajax({
+      url: "http://111.185.9.227:3008/off",
+      type: "GET",
+      dateType: "jsonp",
+      data: {
+        nodeid: id,
+      },
+      async: false,
+      success: (data) => {
+        if (data === "OK") {
+          getSwitchStatus(id, "off");
+          flag = true;
+        }
+      },
+    });
+    if (!flag && i === 4) {
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
       $("#confirm").html("確認");
       $("#check_backdrop").css("pointer-events", "auto");
-    },
-  });
+    }
+  };
+
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => sendCommand(i), i * 1000);
+  }
 };
 
 const switchOnlineOpen = (id) => {
@@ -266,36 +303,132 @@ const switchOnlineOpen = (id) => {
 
 const switchOnline = (id) => {
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
 
-  $.ajax({
-    url: "http://111.185.9.227:3008/stat",
-    type: "GET",
-    dateType: "jsonp",
-    data: {
-      nodeid: id,
-    },
-    success: (data) => {
-      switch (data) {
-        case "Unknown":
-          $(`#on_off_${id}`).text("--");
-          $(`#status_${id}`).html("未知");
-          break;
-
-        default:
-          $(`#on_off_${id}`).text("On");
-          $(`#status_${id}`).html("上線");
-          break;
-      }
-      closeCheck();
-      $("#check_backdrop").css("pointer-events", "auto");
-    },
-    error: () => {
-      alert("網路錯誤");
+  let flag = false;
+  const sendCommand = (i) => {
+    if (flag) return;
+    $.ajax({
+      url: "http://111.185.9.227:3008/init_stat",
+      type: "GET",
+      dateType: "jsonp",
+      data: {
+        nodeid: id,
+      },
+      async: false,
+      success: (data) => {
+        if (data === "OK") {
+          getSwitchStatus(id, "stat");
+          flag = true;
+        }
+      },
+    });
+    if (!flag && i === 4) {
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
       $("#confirm").html("確認");
       $("#check_backdrop").css("pointer-events", "auto");
-    },
-  });
+    }
+  };
+
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => sendCommand(i), i * 1000);
+  }
+};
+
+const checkRecv = (data, id, command) => {
+  if (data.length !== 22) return false;
+
+  let sum = 0;
+  for (let i = 2; i <= 18; i += 2) {
+    sum += parseInt(data.slice(i, i + 2), 16);
+  }
+  if (parseInt(data.slice(20, 22), 16) !== sum % 256) return false;
+
+  let success = false;
+
+  switch (command) {
+    case "onn":
+      if (
+        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(4, 6), 16) === 2 &&
+        parseInt(data.slice(6, 8), 16) === 1
+      ) {
+        $(`#on_off_${id}`).text("On");
+        success = true;
+      }
+      break;
+
+    case "off":
+      if (
+        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(4, 6), 16) === 2 &&
+        parseInt(data.slice(6, 8), 16) === 0
+      ) {
+        $(`#on_off_${id}`).text("Off");
+        success = true;
+      }
+      break;
+
+    case "stat":
+      if (
+        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(4, 6), 16) === 1
+      ) {
+        if (parseInt(data.slice(6, 8), 16) === 1) $(`#on_off_${id}`).text("On");
+        if (parseInt(data.slice(6, 8), 16) === 0)
+          $(`#on_off_${id}`).text("Off");
+
+        $(`#status_${id}`).html("上線");
+        success = true;
+      }
+      break;
+  }
+
+  if (success) {
+    closeCheck();
+    $("#check_backdrop").css("pointer-events", "auto");
+  }
+  return success;
+};
+
+const getSwitchStatus = (id, command) => {
+  let flag = false;
+
+  const sendCommand = (i) => {
+    if (flag) return;
+    $.ajax({
+      url: "http://111.185.9.227:3008/get_stat",
+      type: "GET",
+      dateType: "jsonp",
+      data: {
+        nodeid: id,
+      },
+      async: false,
+      success: (data) => {
+        flag = checkRecv(data, id, command);
+      },
+    });
+    if (!flag && i === 39) {
+      if (command === "stat") {
+        closeCheck();
+        $(`#on_off_${id}`).text("--");
+        $(`#status_${id}`).html("未知");
+      } else {
+        alert("網路錯誤，請重試！");
+        enableButton("cancel");
+        enableButton("confirm");
+        $("#confirm").html("確認");
+        $("#check_backdrop").css("pointer-events", "auto");
+      }
+    }
+  };
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => sendCommand(i), (i + 1) * 500);
+  }
 };
 
 const setFormulaOpen = (id) => {
@@ -365,6 +498,8 @@ const setFormula = (id) => {
   const new_a = $("#new_a").val();
   const new_b = $("#new_b").val();
   $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
 
   $.ajax({
@@ -385,17 +520,33 @@ const setFormula = (id) => {
         closeCheck();
         closeModal();
       } else {
-        alert("網路錯誤");
+        alert("網路錯誤，請重試！");
+        enableButton("cancel");
+        enableButton("confirm");
         $("#confirm").html("確認");
       }
       $("#check_backdrop").css("pointer-events", "auto");
     },
     error: () => {
-      alert("網路錯誤");
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
       $("#confirm").html("確認");
       $("#check_backdrop").css("pointer-events", "auto");
     },
   });
+};
+
+const disableButton = (id) => {
+  $(`#${id}`).attr("disabled", true);
+  $(`#${id}`).css("opacity", 0.5);
+  $(`#${id}`).css("cursor", "not-allowed");
+};
+
+const enableButton = (id) => {
+  $(`#${id}`).attr("disabled", false);
+  $(`#${id}`).css("opacity", 1);
+  $(`#${id}`).css("cursor", "pointer");
 };
 
 const closeCheck = () => {
@@ -415,7 +566,7 @@ const showCheck = (action, id) => {
 
       const buttons1 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="editName(${id})" type="button">
@@ -438,7 +589,7 @@ const showCheck = (action, id) => {
 
       const buttons2 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="switchOn(${id})" type="button">
@@ -461,7 +612,7 @@ const showCheck = (action, id) => {
 
       const buttons3 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="switchOff(${id})" type="button">
@@ -484,7 +635,7 @@ const showCheck = (action, id) => {
 
       const buttons4 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="switchOnline(${id})" type="button">
@@ -507,7 +658,7 @@ const showCheck = (action, id) => {
 
       const buttons5 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="setFormula(${id})" type="button">
@@ -530,7 +681,7 @@ const showCheck = (action, id) => {
 
       const buttons6 = `
         <div class="control_form">
-            <button class="button_group" onclick="closeCheck()" type="button">
+            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
             <button class="button_group" id="confirm" onclick="logOutLoading()" type="button">

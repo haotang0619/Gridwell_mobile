@@ -58,8 +58,6 @@
                 </tbody>
             </table>
         </div>
-
-        <p>請連線至WiFi: powerAP / 1234567890</p>
     </div>
 </div>
 
