@@ -11,7 +11,7 @@ $conn = new mysqli($server_name, $username, $password, 'Mobile', $port);
 if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
-mysqli_query($conn, "set character set utf8");
+mysqli_query($conn, "SET NAMES 'utf8'");
 
 $search = "UPDATE `mobile_$field` SET `name` = '$name', `IP` = '$IP', `port` = $port_edit WHERE `id` = $id";
 $result = $conn->query($search);
