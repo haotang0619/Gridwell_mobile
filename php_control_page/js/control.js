@@ -359,6 +359,7 @@ const checkRecv = (data, id, command) => {
       ) {
         $(`#on_off_${id}`).text("On");
         success = true;
+        addHistory(id, command);
       }
       break;
 
@@ -370,6 +371,7 @@ const checkRecv = (data, id, command) => {
       ) {
         $(`#on_off_${id}`).text("Off");
         success = true;
+        addHistory(id, command);
       }
       break;
 
@@ -422,13 +424,48 @@ const getSwitchStatus = (id, command) => {
         enableButton("cancel");
         enableButton("confirm");
         $("#confirm").html("確認");
-        $("#check_backdrop").css("pointer-events", "auto");
       }
+      $("#check_backdrop").css("pointer-events", "auto");
     }
   };
   for (let i = 0; i < 40; i++) {
     setTimeout(() => sendCommand(i), (i + 1) * 500);
   }
+};
+
+const addHistory = (id, command) => {
+  let record = "";
+  switch (command) {
+    case "onn":
+      // From "/IoT/js/cookieHelper.js":
+      record += acc + "：開啟";
+      break;
+    case "off":
+      // From "/IoT/js/cookieHelper.js":
+      record += acc + "：關閉";
+      break;
+  }
+
+  $.ajax({
+    url: "/IoT/php_control_page/api/add_history.php",
+    type: "POST",
+    dateType: "text",
+    data: {
+      field: 1,
+      name: $(`#name_${id}`).html(),
+      record,
+    },
+    success: (data) => {
+      const message = JSON.parse(data);
+      if (!message.success) {
+        alert("網路錯誤：更新歷史資料失敗！");
+      }
+    },
+    error: () => {
+      console.log("error");
+      alert("網路錯誤：更新歷史資料失敗！");
+    },
+  });
 };
 
 const setFormulaOpen = (id) => {
