@@ -393,6 +393,7 @@ const checkRecv = (data, id, command) => {
         let voltage = (vol + (volDec << 8)) / 100;
         let current = (curr + (currDec << 8)) / 100;
         let resistance = voltage / current;
+        console.log(data);
 
         const a = $(`#old_a_${id}`).html();
         const b = $(`#old_b_${id}`).html();
