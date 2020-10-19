@@ -57,7 +57,6 @@ const init_table = () => {
                   })" type="button">
                   ${settingIcon("button_svg control_svg")}
                   </button>
-                  <span id="on_off_${mes.id}">--</span>
               </td>
             `;
             break;
@@ -315,7 +314,7 @@ const switchOnline = (id) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: id,
+        nodeid: 1, // Temporary
       },
       async: false,
       success: (data) => {
@@ -377,7 +376,7 @@ const checkRecv = (data, id, command) => {
 
     case "stat":
       if (
-        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(2, 4), 16) === 1 && // Temporary
         parseInt(data.slice(4, 6), 16) === 1
       ) {
         if (parseInt(data.slice(6, 8), 16) === 1) $(`#on_off_${id}`).text("On");
@@ -385,6 +384,21 @@ const checkRecv = (data, id, command) => {
           $(`#on_off_${id}`).text("Off");
 
         $(`#status_${id}`).html("上線");
+
+        let vol = parseInt(data.slice(8, 10), 16);
+        let volDec = parseInt(data.slice(10, 12), 16);
+        let curr = parseInt(data.slice(12, 14), 16);
+        let currDec = parseInt(data.slice(14, 16), 16);
+
+        let voltage = (vol + (volDec << 8)) / 100;
+        let current = (curr + (currDec << 8)) / 100;
+        let resistance = voltage / current;
+
+        const a = $(`#old_a_${id}`).html();
+        const b = $(`#old_b_${id}`).html();
+        resistance = a * resistance + b;
+
+        $(`#value_${id}`).html(`${voltage} / ${current} / ${resistance}`);
         success = true;
       }
       break;
@@ -407,7 +421,7 @@ const getSwitchStatus = (id, command) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: id,
+        nodeid: command === "stat" ? 1 : id, // Temporary
       },
       async: false,
       success: (data) => {
