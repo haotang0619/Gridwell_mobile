@@ -15,7 +15,7 @@
 
     <div class="container">
         <div class="history_header">
-            <button class="button_group history_button" onclick="window.location.href='/IoT/control.php'" type="button">
+            <button class="button_group history_button" onclick="window.location.href='/<?php echo $site ?>/control.php'" type="button">
                 開 / 關
             </button>
             <button class="button_group history_button" type="button">
@@ -62,4 +62,4 @@
 </div>
 
 <!-- Modal  -->
-<script type="text/javascript" src="/IoT/php_history_page/components/modal.js"></script>
+<script type="text/javascript" src="/<?php echo $site ?>/php_history_page/components/modal.js"></script>

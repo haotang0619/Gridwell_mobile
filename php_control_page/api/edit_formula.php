@@ -4,7 +4,8 @@ $id = $_POST["id"];
 $new_a = $_POST["new_a"];
 $new_b = $_POST["new_b"];
 
-include $_SERVER["DOCUMENT_ROOT"] . "/IoT/api/mysql.php";
+$site = explode("/", $_SERVER['REQUEST_URI'])[1];
+include $_SERVER["DOCUMENT_ROOT"] . "/" . $site . "/api/mysql.php";
 
 $conn = new mysqli($server_name, $username, $password, 'Mobile', $port);
 if ($conn->connect_error) {

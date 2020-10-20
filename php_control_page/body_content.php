@@ -18,7 +18,7 @@
             <button class="button_group control_button" type="button">
                 開 / 關
             </button>
-            <button class="button_group control_button" onclick="window.location.href='/IoT/history.php'" type="button">
+            <button class="button_group control_button" onclick="window.location.href='/<?php echo $site ?>/history.php'" type="button">
                 歷史資訊
             </button>
             <button class="button_group control_button" onclick="logOutOpen()" type="button">
@@ -62,4 +62,4 @@
 </div>
 
 <!-- Modal  -->
-<script type="text/javascript" src="/IoT/php_control_page/components/modal.js"></script>
+<script type="text/javascript" src="/<?php echo $site ?>/php_control_page/components/modal.js"></script>

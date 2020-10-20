@@ -10,7 +10,8 @@ if ($acc === null || $token === null) {
     return;
 }
 
-include $_SERVER["DOCUMENT_ROOT"] . "/IoT/api/mysql.php";
+$site = explode("/", $_SERVER['REQUEST_URI'])[1];
+include $_SERVER["DOCUMENT_ROOT"] . "/" . $site . "/api/mysql.php";
 
 $conn = new mysqli($server_name, $username, $password, 'Mobile', $port);
 if ($conn->connect_error) {
