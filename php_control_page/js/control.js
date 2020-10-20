@@ -1,7 +1,7 @@
 // Init table
 const init_table = () => {
   $.ajax({
-    url: "/IoT/php_control_page/api/get_table.php",
+    url: `/${site}/php_control_page/api/get_table.php`,
     type: "POST",
     dateType: "text",
     data: {
@@ -176,7 +176,7 @@ const editName = (id) => {
   $("#confirm").prepend(loadingIcon());
 
   $.ajax({
-    url: "/IoT/php_control_page/api/edit_name.php",
+    url: `/${site}/php_control_page/api/edit_name.php`,
     type: "POST",
     dateType: "text",
     data: {
@@ -397,7 +397,7 @@ const checkRecv = (data, id, command) => {
 
         const a = $(`#old_a_${id}`).html();
         const b = $(`#old_b_${id}`).html();
-        resistance = a * resistance + b;
+        resistance = isFinite(resistance) ? a * resistance + b : resistance;
 
         $(`#value_${id}`).html(`${voltage} / ${current} / ${resistance}`);
         success = true;
@@ -452,17 +452,17 @@ const addHistory = (id, command) => {
   let record = "";
   switch (command) {
     case "onn":
-      // From "/IoT/js/cookieHelper.js":
+      // From `/${site}/js/cookieHelper.js`:
       record += acc + "：開啟";
       break;
     case "off":
-      // From "/IoT/js/cookieHelper.js":
+      // From `/${site}/js/cookieHelper.js`:
       record += acc + "：關閉";
       break;
   }
 
   $.ajax({
-    url: "/IoT/php_control_page/api/add_history.php",
+    url: `/${site}/php_control_page/api/add_history.php`,
     type: "POST",
     dateType: "text",
     data: {
@@ -555,7 +555,7 @@ const setFormula = (id) => {
   $("#confirm").prepend(loadingIcon());
 
   $.ajax({
-    url: "/IoT/php_control_page/api/edit_formula.php",
+    url: `/${site}/php_control_page/api/edit_formula.php`,
     type: "POST",
     dateType: "text",
     data: {

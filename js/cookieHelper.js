@@ -1,3 +1,5 @@
+const site = document.location.pathname.split("/")[1];
+
 const setCookie = (name, value, days) => {
   const d = new Date();
   d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days);
@@ -17,7 +19,7 @@ const deleteCookie = (name = "accessToken") => {
 const accessToken = getCookie();
 let acc;
 $.ajax({
-  url: "/IoT/api/check_login.php",
+  url: `/${site}/api/check_login.php`,
   type: "POST",
   dateType: "text",
   async: false,
@@ -29,16 +31,18 @@ $.ajax({
     if (message.valid) {
       acc = message.acc;
       if (
-        window.location.pathname.toLowerCase().replaceAll("/", "") === "iot"
+        window.location.pathname.toLowerCase().replaceAll("/", "") ===
+        site.toLowerCase()
       ) {
-        window.location.href = "/IoT/control.php";
+        window.location.href = `/${site}/control.php`;
       }
     } else {
       if (
-        window.location.pathname.toLowerCase().replaceAll("/", "") !== "iot"
+        window.location.pathname.toLowerCase().replaceAll("/", "") !==
+        site.toLowerCase()
       ) {
         alert("您尚未登入！");
-        window.location.href = "/IoT/";
+        window.location.href = `/${site}/`;
       }
     }
   },
@@ -47,5 +51,5 @@ $.ajax({
 
 const logOut = () => {
   deleteCookie();
-  window.location.href = "/IoT/";
+  window.location.href = `/${site}/`;
 };

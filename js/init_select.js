@@ -1,7 +1,7 @@
 // Init select
 const init_select = () => {
   $.ajax({
-    url: "/IoT/api/get_select.php",
+    url: `/${site}/api/get_select.php`,
     type: "POST",
     async: false,
     success: (data) => {

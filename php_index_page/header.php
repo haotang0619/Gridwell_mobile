@@ -17,8 +17,6 @@
 
 <!-- General js  -->
 <script type="text/javascript" src="/<?php echo $site ?>/js/jquery.min.js"></script>
-
-<!-- Check login js  -->
 <script type="text/javascript" src="/<?php echo $site ?>/js/cookieHelper.js"></script>
 
 <!-- Page js  -->
