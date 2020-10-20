@@ -5,7 +5,7 @@ $pwd = $_POST["pwd"];
 $site = explode("/", $_SERVER['REQUEST_URI'])[1];
 include $_SERVER["DOCUMENT_ROOT"] . "/" . $site . "/api/mysql.php";
 
-$conn = new mysqli($server_name, $username, $password, 'Mobile', $port);
+$conn = new mysqli($server_name, $username, $password, $database, $port);
 if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
