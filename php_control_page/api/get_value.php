@@ -10,18 +10,15 @@ if ($conn->connect_error) {
 }
 mysqli_query($conn, "SET NAMES 'utf8'");
 
-$search = "SELECT * FROM history_$field";
+$search = "SELECT * FROM `daily_{$field}_1` ORDER BY `register_time` DESC LIMIT 1";
 $result = $conn->query($search);
 $message = array();
 if (mysqli_num_rows($result)) {
     while ($row = $result->fetch_assoc()) {
-        array_push($message, array(
-            "time" => $row["register_time"], 
-            "name" => $row["name"], 
-            "record" => $row["record"],
-            "daily" => $row["daily"],
-            "show_daily" => $show_daily, // from mysql.php
-        ));
+        $message[1] = array(
+            "resistence" => $row["resistence"], 
+            "status" => $row["status"], 
+        );
     }
 }
 echo json_encode($message);

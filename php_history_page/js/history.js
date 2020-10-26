@@ -12,6 +12,8 @@ const init_table = () => {
 
       const message = JSON.parse(data);
       message.forEach((mes) => {
+        if (!mes.show_daily && mes.daily === "1") return;
+
         const tr_start = `<tr class="table_body_tr">`;
         let reg_time = `
           <td class="table_body_td">

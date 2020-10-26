@@ -1,4 +1,22 @@
 // Init table
+
+const init_value = async () => {
+  let message;
+  $.ajax({
+    url: `/${site}/php_control_page/api/get_value.php`,
+    type: "POST",
+    async: false,
+    dateType: "text",
+    data: {
+      field: 1,
+    },
+    success: (data) => {
+      message = JSON.parse(data);
+    },
+  });
+  return message;
+};
+
 const init_table = () => {
   $.ajax({
     url: `/${site}/php_control_page/api/get_table.php`,
@@ -7,7 +25,13 @@ const init_table = () => {
     data: {
       field: 1,
     },
-    success: (data) => {
+    success: async (data) => {
+      const init = await init_value();
+      Object.values(init).forEach((v) => {
+        v.button = v.status === "Offline" ? "離線" : "上線";
+        return v;
+      });
+
       $("#table_body").empty();
 
       const message = JSON.parse(data);
@@ -32,20 +56,28 @@ const init_table = () => {
         switch (mes.type) {
           case "0":
             content += `
-                  <button class="button_group" onclick="switchOnOpen(${mes.id})" type="button">
+                  <button class="button_group" onclick="switchOnOpen(${
+                    mes.id
+                  })" type="button">
                       ON
                   </button>
-                  <button class="button_group" onclick="switchOffOpen(${mes.id})" type="button">
+                  <button class="button_group" onclick="switchOffOpen(${
+                    mes.id
+                  })" type="button">
                       OFF
                   </button>
-                  <span id="on_off_${mes.id}">--</span>
+                  <span id="on_off_${mes.id}">${
+              init[1].status === "Offline" ? "--" : init[1].status
+            }</span>
               </td>
             `;
             break;
 
           case "1":
             content += `
-                  <span id="value_${mes.id}">--</span>
+                  <span id="value_${mes.id}">${
+              init[1].resistence === null ? "--" : init[1].resistence
+            }</span>
                   <span style="display: none" id="old_a_${mes.id}">${
               mes.a
             }</span>
@@ -76,7 +108,7 @@ const init_table = () => {
         const status = `
           <td class="table_body_td">
               <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
-                  更新
+                  ${init[1].button}
               </button>
           </td>
         `;
@@ -395,9 +427,11 @@ const checkRecv = (data, id, command) => {
         let resistance = voltage / current;
         console.log(data);
 
-        const a = $(`#old_a_${id}`).html();
-        const b = $(`#old_b_${id}`).html();
-        resistance = isFinite(resistance) ? a * resistance + b : resistance;
+        const a = parseFloat($(`#old_a_${id}`).html());
+        const b = parseFloat($(`#old_b_${id}`).html());
+        resistance = isFinite(resistance)
+          ? (a * resistance + b).toFixed(2)
+          : resistance;
 
         $(`#value_${id}`).html(`${voltage} / ${current} / ${resistance}`);
         success = true;
