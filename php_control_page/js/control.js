@@ -66,6 +66,7 @@ const init_table = () => {
                   })" type="button">
                       OFF
                   </button>
+                  &emsp;
                   <span id="on_off_${mes.id}">${
               init[1].status === "Offline" ? "--" : init[1].status
             }</span>
