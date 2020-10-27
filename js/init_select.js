@@ -8,7 +8,7 @@ const init_select = () => {
       const message = JSON.parse(data);
       message.forEach((mes) => {
         $("#select_field").append(`
-            <option value="${mes.id}">${mes.field}</option>
+            <option value="${mes.id}" selected>${mes.field}</option>
         `);
       });
     },

@@ -75,7 +75,7 @@ const init_table = () => {
 
           case "1":
             content += `
-                  <span id="value_${mes.id}">${
+                  <span id="value_${mes.id}">阻抗: ${
               init[1].resistence === null ? "--" : init[1].resistence
             }</span>
                   <span style="display: none" id="old_a_${mes.id}">${
@@ -423,17 +423,19 @@ const checkRecv = (data, id, command) => {
         let currDec = parseInt(data.slice(14, 16), 16);
 
         let voltage = (vol + (volDec << 8)) / 100;
-        let current = (curr + (currDec << 8)) / 100;
+        let current = curr + (currDec << 8);
         let resistance = voltage / current;
         console.log(data);
 
         const a = parseFloat($(`#old_a_${id}`).html());
         const b = parseFloat($(`#old_b_${id}`).html());
         resistance = isFinite(resistance)
-          ? (a * resistance + b).toFixed(2)
+          ? (a * resistance + b).toFixed(4)
           : resistance;
 
-        $(`#value_${id}`).html(`${voltage} / ${current} / ${resistance}`);
+        $(`#value_${id}`).html(
+          `電壓: ${voltage} / 特徵: ${current} / 阻抗: ${resistance}`
+        );
         success = true;
       }
       break;
