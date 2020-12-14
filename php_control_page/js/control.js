@@ -67,7 +67,14 @@ const init_table = () => {
 
           case "1":
             mes.content += `
-                <span id="value_${mes.id}">阻抗: ${
+                <span id="value_${mes.id}"></span>阻抗: <span id="resistence_${
+              mes.id
+            }">${
+              init[1].resistence === null
+                ? "--"
+                : Math.round((mes.a * init[1].resistence + mes.b) * 100) / 100
+            }</span>
+                <span style="display: none" id="origin_resistence_${mes.id}">${
               init[1].resistence === null ? "--" : init[1].resistence
             }</span>
                 <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
@@ -429,15 +436,17 @@ const checkRecv = (data, id, command) => {
         let resistance = voltage / current;
         console.log(data);
 
+        $(`#origin_resistence_${id}`).html(`${resistance}`);
+
         const a = parseFloat($(`#old_a_${id}`).html());
         const b = parseFloat($(`#old_b_${id}`).html());
         resistance = isFinite(resistance)
           ? (a * resistance + b).toFixed(4)
           : resistance;
+        resistance = Math.round(resistance * 100) / 100;
 
-        $(`#value_${id}`).html(
-          `電壓: ${voltage} / 特徵: ${current} / 阻抗: ${resistance}`
-        );
+        $(`#value_${id}`).html(`電壓: ${voltage} / 特徵: ${current} / `);
+        $(`#resistence_${id}`).html(`${resistance}`);
         success = true;
       }
       break;
@@ -607,6 +616,18 @@ const setFormula = (id) => {
       if (message.success) {
         $(`#old_a_${id}`).text(new_a);
         $(`#old_b_${id}`).text(new_b);
+
+        let resistance = $(`#origin_resistence_${id}`).html();
+        if (resistance !== "--") {
+          resistance = parseFloat(resistance);
+          resistance = isFinite(resistance)
+            ? parseFloat(new_a) * voltage + parseFloat(new_b)
+            : resistance;
+          resistance = Math.round(resistance * 100) / 100;
+        }
+
+        $(`#resistance_${id}`).html(`${resistance}`);
+
         closeCheck();
         closeModal();
       } else {
