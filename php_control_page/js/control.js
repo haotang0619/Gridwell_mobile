@@ -36,15 +36,15 @@ const init_table = () => {
 
       const message = JSON.parse(data);
       message.forEach((mes) => {
-        const tr_start = `<tr class="table_body_tr">`;
+        const tr_start = `<tr>`;
         let name = `
-          <td class="table_body_td control_name_td">
+          <td>
             <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
             <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
             <span style="display: none" id="port_${mes.id}">${mes.port}</span>
         `;
         name += `
-              <button class="button_group control_setting" onclick="editNameOpen(${
+              <button class="control_setting" onclick="editNameOpen(${
                 mes.id
               })" type="button">
                   ${editIcon("button_svg control_svg")}
@@ -52,18 +52,14 @@ const init_table = () => {
           </td>
         `;
 
-        let content = `<td class="table_body_td">`;
+        let content = `<td>`;
         switch (mes.type) {
           case "0":
             content += `
-                  <button class="button_group" onclick="switchOnOpen(${
-                    mes.id
-                  })" type="button">
+                  <button onclick="switchOnOpen(${mes.id})" type="button">
                       ON
                   </button>
-                  <button class="button_group" onclick="switchOffOpen(${
-                    mes.id
-                  })" type="button">
+                  <button onclick="switchOffOpen(${mes.id})" type="button">
                       OFF
                   </button>
                   &emsp;
@@ -85,7 +81,7 @@ const init_table = () => {
                   <span style="display: none" id="old_b_${mes.id}">${
               mes.b
             }</span>
-                  <button class="button_group control_setting" onclick="setFormulaOpen(${
+                  <button class="control_setting" onclick="setFormulaOpen(${
                     mes.id
                   })" type="button">
                   ${settingIcon("button_svg control_svg")}
@@ -96,10 +92,10 @@ const init_table = () => {
 
           default:
             content += `
-                  <button class="button_group" onclick="viewVideo(${mes.id})" type="button">
+                  <button onclick="viewVideo(${mes.id})" type="button">
                       查看
                   </button>
-                  <button class="button_group" onclick="editIP(${mes.id})" type="button">
+                  <button onclick="editIP(${mes.id})" type="button">
                       編輯
                   </button>
               </td>
@@ -107,8 +103,8 @@ const init_table = () => {
             break;
         }
         const status = `
-          <td class="table_body_td">
-              <button class="button_group control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
+          <td>
+              <button class="control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
                   ${init[1].button}
               </button>
           </td>
@@ -184,10 +180,10 @@ const editNameOpen = (id) => {
 
   const buttons = `
     <div class="control_form">
-        <button class="button_group" onclick="closeModal()" type="button">
+        <button onclick="closeModal()" type="button">
             取消
         </button>
-        <button class="button_group" onclick="showCheck('name', ${id})" type="button">
+        <button onclick="showCheck('name', ${id})" type="button">
             送出
         </button>
     </div>
@@ -562,10 +558,10 @@ const setFormulaOpen = (id) => {
 
   const buttons = `
     <div class="control_form">
-        <button class="button_group" onclick="closeModal()" type="button">
+        <button onclick="closeModal()" type="button">
             取消
         </button>
-        <button class="button_group" onclick="showCheck('formula', ${id})" type="button">
+        <button onclick="showCheck('formula', ${id})" type="button">
             送出
         </button>
     </div>
@@ -655,10 +651,10 @@ const showCheck = (action, id) => {
 
       const buttons1 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="editName(${id})" type="button">
+            <button id="confirm" onclick="editName(${id})" type="button">
                 確認
             </button>
         </div>
@@ -678,10 +674,10 @@ const showCheck = (action, id) => {
 
       const buttons2 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="switchOn(${id})" type="button">
+            <button id="confirm" onclick="switchOn(${id})" type="button">
                 確認
             </button>
         </div>
@@ -701,10 +697,10 @@ const showCheck = (action, id) => {
 
       const buttons3 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="switchOff(${id})" type="button">
+            <button id="confirm" onclick="switchOff(${id})" type="button">
                 確認
             </button>
         </div>
@@ -724,10 +720,10 @@ const showCheck = (action, id) => {
 
       const buttons4 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="switchOnline(${id})" type="button">
+            <button id="confirm" onclick="switchOnline(${id})" type="button">
                 確認
             </button>
         </div>
@@ -747,10 +743,10 @@ const showCheck = (action, id) => {
 
       const buttons5 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="setFormula(${id})" type="button">
+            <button id="confirm" onclick="setFormula(${id})" type="button">
                 確認
             </button>
         </div>
@@ -770,10 +766,10 @@ const showCheck = (action, id) => {
 
       const buttons6 = `
         <div class="control_form">
-            <button class="button_group" id="cancel" onclick="closeCheck()" type="button">
+            <button id="cancel" onclick="closeCheck()" type="button">
                 取消
             </button>
-            <button class="button_group" id="confirm" onclick="logOutLoading()" type="button">
+            <button id="confirm" onclick="logOutLoading()" type="button">
                 確認
             </button>
         </div>

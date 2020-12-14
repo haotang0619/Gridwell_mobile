@@ -15,13 +15,13 @@
 
     <div class="container">
         <div class="control_header">
-            <button class="button_group control_button" type="button">
+            <button class="control_button" type="button">
                 開 / 關
             </button>
-            <button class="button_group control_button" onclick="window.location.href='/<?php echo $site ?>/history.php'" type="button">
+            <button class="control_button" onclick="window.location.href='/<?php echo $site ?>/history.php'" type="button">
                 歷史資訊
             </button>
-            <button class="button_group control_button" onclick="logOutOpen()" type="button">
+            <button class="control_button" onclick="logOutOpen()" type="button">
                 登出
             </button>
         </div>
@@ -38,26 +38,24 @@
             </fieldset>
         </div>
 
-        <div class="table_group">
-            <table class="table_root" aria-label="table">
-                <thead class="table_head">
-                    <tr class="table_head_tr">
-                        <th class="table_head_th" scope="col">設備名稱</th>
-                        <th class="table_head_th" scope="col">設備內容</th>
-                        <th class="table_head_th" scope="col">設備狀態</th>
-                    </tr>
-                </thead>
-                <!-- php_control_page/js/control.js -->
-                <!-- Loading Icon show first -->
-                <tbody class="table_body" id="table_body">
-                    <script type="text/javascript">
-                        $("#table_body").append("<td></td>");
-                        $("#table_body").append(loadingIcon("control_loading"));
-                        init_table();
-                    </script>
-                </tbody>
-            </table>
-        </div>
+        <table class="table_group" data-toggle="table" data-pagination="true" aria-label="table">
+            <thead>
+                <tr>
+                    <th>設備名稱</th>
+                    <th>設備內容</th>
+                    <th>設備狀態</th>
+                </tr>
+            </thead>
+            <!-- php_control_page/js/control.js -->
+            <!-- Loading Icon show first -->
+            <tbody id="table_body">
+                <script type="text/javascript">
+                    $("#table_body").append("<td></td>");
+                    $("#table_body").append(loadingIcon("control_loading"));
+                    init_table();
+                </script>
+            </tbody>
+        </table>
     </div>
 </div>
 
