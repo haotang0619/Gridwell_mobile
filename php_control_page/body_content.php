@@ -38,12 +38,12 @@
             </fieldset>
         </div>
 
-        <table class="table_group" data-toggle="table" data-pagination="true" aria-label="table">
+        <table id="control_table" class="table_group table table-striped table-bordered table-sm" aria-label="table">
             <thead>
                 <tr>
-                    <th>設備名稱</th>
-                    <th>設備內容</th>
-                    <th>設備狀態</th>
+                    <th data-field="infor">設備名稱</th>
+                    <th data-field="content">設備內容</th>
+                    <th data-field="status">設備狀態</th>
                 </tr>
             </thead>
             <!-- php_control_page/js/control.js -->
@@ -52,10 +52,15 @@
                 <script type="text/javascript">
                     $("#table_body").append("<td></td>");
                     $("#table_body").append(loadingIcon("control_loading"));
+                    $("#table_body").append("<td></td>");
                     init_table();
                 </script>
             </tbody>
         </table>
+        <div class="control_footer">
+            <p>本頁面資訊每十分鐘會更新一次，若要取得即時資訊請點擊該設備右方按鈕，立即取得新資料。</p>
+            <p>按鈕上文字顯示為“未知”代表設備未開機或不在電信服務範圍內。</p>
+        </div>
     </div>
 </div>
 

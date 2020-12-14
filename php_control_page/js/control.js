@@ -1,6 +1,6 @@
 // Init table
 
-const init_value = async () => {
+const init_value = () => {
   let message;
   $.ajax({
     url: `/${site}/php_control_page/api/get_value.php`,
@@ -25,8 +25,8 @@ const init_table = () => {
     data: {
       field: 1,
     },
-    success: async (data) => {
-      const init = await init_value();
+    success: (data) => {
+      const init = init_value();
       Object.values(init).forEach((v) => {
         v.button = v.status === "Offline" ? "離線" : "上線";
         return v;
@@ -34,86 +34,91 @@ const init_table = () => {
 
       $("#table_body").empty();
 
-      const message = JSON.parse(data);
-      message.forEach((mes) => {
-        const tr_start = `<tr>`;
-        let name = `
-          <td>
-            <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
-            <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
-            <span style="display: none" id="port_${mes.id}">${mes.port}</span>
+      const message = JSON.parse(data).map((mes) => {
+        mes.infor = `
+          <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
+          <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
+          <span style="display: none" id="port_${mes.id}">${mes.port}</span>
         `;
-        name += `
-              <button class="control_setting" onclick="editNameOpen(${
-                mes.id
-              })" type="button">
-                  ${editIcon("button_svg control_svg")}
-              </button>
-          </td>
+        mes.infor += `
+          <button class="control_setting" onclick="editNameOpen(${
+            mes.id
+          })" type="button">
+              ${editIcon("button_svg control_svg")}
+          </button>
         `;
 
-        let content = `<td>`;
+        mes.content = "";
         switch (mes.type) {
           case "0":
-            content += `
-                  <button onclick="switchOnOpen(${mes.id})" type="button">
-                      ON
-                  </button>
-                  <button onclick="switchOffOpen(${mes.id})" type="button">
-                      OFF
-                  </button>
-                  &emsp;
-                  <span id="on_off_${mes.id}">${
+            mes.content += `
+                <button onclick="switchOnOpen(${mes.id})" type="button">
+                    ON
+                </button>
+                <button onclick="switchOffOpen(${mes.id})" type="button">
+                    OFF
+                </button>
+                &emsp;
+                <span id="on_off_${mes.id}">${
               init[1].status === "Offline" ? "--" : init[1].status
             }</span>
-              </td>
             `;
             break;
 
           case "1":
-            content += `
-                  <span id="value_${mes.id}">阻抗: ${
+            mes.content += `
+                <span id="value_${mes.id}">阻抗: ${
               init[1].resistence === null ? "--" : init[1].resistence
             }</span>
-                  <span style="display: none" id="old_a_${mes.id}">${
-              mes.a
-            }</span>
-                  <span style="display: none" id="old_b_${mes.id}">${
-              mes.b
-            }</span>
-                  <button class="control_setting" onclick="setFormulaOpen(${
-                    mes.id
-                  })" type="button">
-                  ${settingIcon("button_svg control_svg")}
-                  </button>
-              </td>
+                <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
+                <span style="display: none" id="old_b_${mes.id}">${mes.b}</span>
+                <button class="control_setting" onclick="setFormulaOpen(${
+                  mes.id
+                })" type="button">
+                ${settingIcon("button_svg control_svg")}
+                </button>
             `;
             break;
 
           default:
-            content += `
-                  <button onclick="viewVideo(${mes.id})" type="button">
-                      查看
-                  </button>
-                  <button onclick="editIP(${mes.id})" type="button">
-                      編輯
-                  </button>
-              </td>
+            mes.content += `
+              <button onclick="viewVideo(${mes.id})" type="button">
+                  查看
+              </button>
+              <button onclick="editIP(${mes.id})" type="button">
+                  編輯
+              </button>
             `;
             break;
         }
-        const status = `
-          <td>
-              <button class="control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
-                  ${init[1].button}
-              </button>
-          </td>
+        mes.status = `
+          <button class="control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
+              ${init[1].button}
+          </button>
         `;
-        const tr_end = `</tr>`;
 
-        $("#table_body").append(
-          `${tr_start}${name}${content}${status}${tr_end}`
-        );
+        return mes;
+      });
+
+      $("#control_table").bootstrapTable("destroy");
+      $("#control_table").bootstrapTable({
+        data: message,
+        // exportOptions: {
+        //   fileName: `索道歷史紀錄${new Date().toLocaleTimeString("en-us", {
+        //     year: "numeric",
+        //     month: "short",
+        //     day: "numeric",
+        //   })}`,
+        // },
+        // exportTypes: ["csv", "excel", "pdf"],
+        pagination: true,
+        paginationLoop: false,
+        showJumpTo: true,
+        // showColumns: true,
+        // showExport: true,
+        search: true,
+        // sortName: "time",
+        // sortOrder: "desc",
       });
     },
     error: () => alert("網路錯誤，請重試！"),
