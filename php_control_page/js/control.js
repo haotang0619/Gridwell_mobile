@@ -39,6 +39,7 @@ const init_table = () => {
           <span class="control_name_span" id="name_${mes.id}">${mes.name}</span>
           <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
           <span style="display: none" id="port_${mes.id}">${mes.port}</span>
+          <span style="display: none" id="nodeID_${mes.id}">${mes.nodeID}</span>
         `;
         mes.infor += `
           <button class="control_setting" onclick="editNameOpen(${
@@ -92,9 +93,10 @@ const init_table = () => {
               <button onclick="viewVideo(${mes.id})" type="button">
                   查看
               </button>
-              <button onclick="editIP(${mes.id})" type="button">
+              <button onclick="editVideoOpen(${mes.id})" type="button">
                   編輯
               </button>
+              <span style="display: none" id="youtube_${mes.id}">${mes.youtube}</span>
             `;
             break;
         }
@@ -195,7 +197,7 @@ const editNameOpen = (id) => {
         <button onclick="closeModal()" type="button">
             取消
         </button>
-        <button onclick="showCheck('name', ${id})" type="button">
+        <button onclick="showCheck('name',${id})" type="button">
             送出
         </button>
     </div>
@@ -258,6 +260,7 @@ const switchOnOpen = (id) => {
 };
 
 const switchOn = (id) => {
+  const nodeid = $(`#nodeID_${id}`).html();
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -271,7 +274,7 @@ const switchOn = (id) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: id,
+        nodeid,
       },
       async: false,
       success: (data) => {
@@ -300,6 +303,7 @@ const switchOffOpen = (id) => {
 };
 
 const switchOff = (id) => {
+  const nodeid = $(`#nodeID_${id}`).html();
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -313,7 +317,7 @@ const switchOff = (id) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: id,
+        nodeid,
       },
       async: false,
       success: (data) => {
@@ -342,6 +346,7 @@ const switchOnlineOpen = (id) => {
 };
 
 const switchOnline = (id) => {
+  const nodeid = $(`#nodeID_${id}`).html();
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -355,7 +360,7 @@ const switchOnline = (id) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: 1, // Temporary
+        nodeid,
       },
       async: false,
       success: (data) => {
@@ -460,6 +465,7 @@ const checkRecv = (data, id, command) => {
 };
 
 const getSwitchStatus = (id, command) => {
+  const nodeid = $(`#nodeID_${id}`).html();
   let flag = false;
 
   const sendCommand = (i) => {
@@ -469,7 +475,7 @@ const getSwitchStatus = (id, command) => {
       type: "GET",
       dateType: "jsonp",
       data: {
-        nodeid: command === "stat" ? 1 : id, // Temporary
+        nodeid,
       },
       async: false,
       success: (data) => {
@@ -648,6 +654,95 @@ const setFormula = (id) => {
   });
 };
 
+const viewVideo = (id) => {
+  const youtube = $(`#youtube_${id}`).html();
+
+  $("#modal").css("display", "block");
+  const frame = `<iframe width="560" height="315" src="${youtube}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+  $("#modal_box").empty();
+  $("#modal_box").append(frame);
+};
+
+const editVideoOpen = (id) => {
+  const old_youtube = $(`#youtube_${id}`).html();
+
+  $("#modal").css("display", "block");
+  const header = `
+    <div class="control_form">
+        <h2 class="control_text">編輯 Youtube 網址</h2>
+    </div>
+  `;
+
+  const form = `
+    <div class="control_form">
+        <span class="control_text">網址</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_youtube" value="${old_youtube}" required />
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入 Youtube 網址</legend>
+            </fieldset>
+        </div>
+    </div>
+  `;
+
+  const buttons = `
+    <div class="control_form">
+        <button onclick="closeModal()" type="button">
+            取消
+        </button>
+        <button onclick="showCheck('youtube', ${id})" type="button">
+            送出
+        </button>
+    </div>
+  `;
+
+  $("#modal_box").empty();
+  $("#modal_box").append(header);
+  $("#modal_box").append(form);
+  $("#modal_box").append(buttons);
+};
+
+const editVideo = (id) => {
+  const new_youtube = $("#new_youtube").val();
+  $("#check_backdrop").css("pointer-events", "none");
+  disableButton("cancel");
+  disableButton("confirm");
+  $("#confirm").prepend(loadingIcon());
+
+  $.ajax({
+    url: `/${site}/php_control_page/api/edit_youtube.php`,
+    type: "POST",
+    dateType: "text",
+    data: {
+      field: 1,
+      id,
+      new_youtube,
+    },
+    success: (data) => {
+      const message = JSON.parse(data);
+      if (message.success) {
+        $(`#youtube_${id}`).text(new_youtube);
+        closeCheck();
+        closeModal();
+      } else {
+        alert("網路錯誤，請重試！");
+        enableButton("cancel");
+        enableButton("confirm");
+        $("#confirm").html("確認");
+      }
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
+    error: () => {
+      alert("網路錯誤，請重試！");
+      enableButton("cancel");
+      enableButton("confirm");
+      $("#confirm").html("確認");
+      $("#check_backdrop").css("pointer-events", "auto");
+    },
+  });
+};
+
 const disableButton = (id) => {
   $(`#${id}`).attr("disabled", true);
   $(`#${id}`).css("opacity", 0.5);
@@ -664,7 +759,7 @@ const closeCheck = () => {
   $("#check").css("display", "none");
 };
 
-const showCheck = (action, id) => {
+const showCheck = (action, id, nodeID) => {
   $("#check").css("display", "block");
 
   switch (action) {
@@ -804,6 +899,29 @@ const showCheck = (action, id) => {
       $("#check_box").empty();
       $("#check_box").append(text6);
       $("#check_box").append(buttons6);
+      break;
+
+    case "youtube":
+      const text7 = `
+        <div class="control_form">
+            <span class="control_text">確認要更改此設備的 Youtube 網址嗎？</span>
+        </div>
+      `;
+
+      const buttons7 = `
+        <div class="control_form">
+            <button id="cancel" onclick="closeCheck()" type="button">
+                取消
+            </button>
+            <button id="confirm" onclick="editVideo(${id})" type="button">
+                確認
+            </button>
+        </div>
+      `;
+
+      $("#check_box").empty();
+      $("#check_box").append(text7);
+      $("#check_box").append(buttons7);
       break;
   }
 };

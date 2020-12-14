@@ -23,6 +23,8 @@ if (mysqli_num_rows($result)) {
             "port" => $row["port"],
             "a" => $row["a"],
             "b" => $row["b"],
+            "youtube" => $row["youtube"],
+            "nodeID" => $row["nodeID"],
         ));
     }
 }
