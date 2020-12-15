@@ -73,7 +73,11 @@ const init_table = () => {
             }">${
               init[1].resistence === null
                 ? "--"
-                : Math.round((mes.a * init[1].resistence + mes.b) * 100) / 100
+                : Math.round(
+                    (parseFloat(mes.a) * init[1].resistence +
+                      parseFloat(mes.b)) *
+                      100
+                  ) / 100
             }</span>
                 <span style="display: none" id="origin_resistence_${mes.id}">${
               init[1].resistence === null ? "--" : init[1].resistence
