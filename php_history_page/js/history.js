@@ -23,7 +23,7 @@ const init_table = () => {
             day: "numeric",
           })}`,
         },
-        exportTypes: ["csv", "excel", "pdf"],
+        exportTypes: ["csv", "excel"],
         pagination: true,
         paginationLoop: false,
         showJumpTo: true,
