@@ -661,11 +661,12 @@ const setFormula = (id) => {
 const viewVideo = (id) => {
   const youtube = $(`#youtube_${id}`).html();
 
-  $("#modal").css("display", "block");
-  const frame = `<iframe width="560" height="315" src="${youtube}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  window.open(youtube, "_blank", "width=800,height=550");
+  // $("#modal").css("display", "block");
+  // const frame = `<iframe width="560" height="315" src="${youtube}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
-  $("#modal_box").empty();
-  $("#modal_box").append(frame);
+  // $("#modal_box").empty();
+  // $("#modal_box").append(frame);
 };
 
 const editVideoOpen = (id) => {
