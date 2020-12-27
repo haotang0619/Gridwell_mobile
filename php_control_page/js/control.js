@@ -275,7 +275,7 @@ const switchOn = (id) => {
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: `http://111.185.9.227:${port}}/onn`,
+      url: `http://111.185.9.227:${port}/onn`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -538,7 +538,6 @@ const addHistory = (id, command) => {
       }
     },
     error: () => {
-      console.log("error");
       alert("網路錯誤：更新歷史資料失敗！");
     },
   });
