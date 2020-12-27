@@ -265,6 +265,7 @@ const switchOnOpen = (id) => {
 
 const switchOn = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
+  const port = nodeid === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -274,7 +275,7 @@ const switchOn = (id) => {
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: "http://111.185.9.227:3008/onn",
+      url: `http://111.185.9.227:${port}}/onn`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -308,6 +309,7 @@ const switchOffOpen = (id) => {
 
 const switchOff = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
+  const port = nodeid === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -317,7 +319,7 @@ const switchOff = (id) => {
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: "http://111.185.9.227:3008/off",
+      url: `http://111.185.9.227:${port}/off`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -351,6 +353,7 @@ const switchOnlineOpen = (id) => {
 
 const switchOnline = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
+  const port = nodeid === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -360,7 +363,7 @@ const switchOnline = (id) => {
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: "http://111.185.9.227:3008/init_stat",
+      url: `http://111.185.9.227:${port}/init_stat`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -470,12 +473,13 @@ const checkRecv = (data, id, command) => {
 
 const getSwitchStatus = (id, command) => {
   const nodeid = $(`#nodeID_${id}`).html();
+  const port = nodeid === 1 ? 3008 : 2322;
   let flag = false;
 
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: "http://111.185.9.227:3008/get_stat",
+      url: `http://111.185.9.227:${port}/get_stat`,
       type: "GET",
       dateType: "jsonp",
       data: {
