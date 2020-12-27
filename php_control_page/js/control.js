@@ -391,7 +391,7 @@ const switchOnline = (id) => {
   }
 };
 
-const checkRecv = (data, id, command) => {
+const checkRecv = (data, id, nodeid, command) => {
   if (data.length !== 22) return false;
 
   let sum = 0;
@@ -405,7 +405,7 @@ const checkRecv = (data, id, command) => {
   switch (command) {
     case "onn":
       if (
-        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(2, 4), 16) === parseInt(nodeid) &&
         parseInt(data.slice(4, 6), 16) === 2 &&
         parseInt(data.slice(6, 8), 16) === 1
       ) {
@@ -417,7 +417,7 @@ const checkRecv = (data, id, command) => {
 
     case "off":
       if (
-        parseInt(data.slice(2, 4), 16) === id &&
+        parseInt(data.slice(2, 4), 16) === parseInt(nodeid) &&
         parseInt(data.slice(4, 6), 16) === 2 &&
         parseInt(data.slice(6, 8), 16) === 0
       ) {
@@ -429,7 +429,7 @@ const checkRecv = (data, id, command) => {
 
     case "stat":
       if (
-        parseInt(data.slice(2, 4), 16) === 1 && // Temporary
+        parseInt(data.slice(2, 4), 16) === parseInt(nodeid) &&
         parseInt(data.slice(4, 6), 16) === 1
       ) {
         if (parseInt(data.slice(6, 8), 16) === 1) $(`#on_off_${id}`).text("On");
@@ -487,7 +487,7 @@ const getSwitchStatus = (id, command) => {
       },
       async: false,
       success: (data) => {
-        flag = checkRecv(data, id, command);
+        flag = checkRecv(data, id, nodeid, command);
       },
     });
     if (!flag && i === 39) {
