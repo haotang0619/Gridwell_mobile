@@ -265,7 +265,7 @@ const switchOnOpen = (id) => {
 
 const switchOn = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
-  const port = nodeid === 1 ? 3008 : 2322;
+  const port = parseInt(nodeid) === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -309,7 +309,7 @@ const switchOffOpen = (id) => {
 
 const switchOff = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
-  const port = nodeid === 1 ? 3008 : 2322;
+  const port = parseInt(nodeid) === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -353,7 +353,7 @@ const switchOnlineOpen = (id) => {
 
 const switchOnline = (id) => {
   const nodeid = $(`#nodeID_${id}`).html();
-  const port = nodeid === 1 ? 3008 : 2322;
+  const port = parseInt(nodeid) === 1 ? 3008 : 2322;
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -394,6 +394,7 @@ const switchOnline = (id) => {
 const checkRecv = (data, id, nodeid, command) => {
   if (data.length !== 22) return false;
 
+  console.log(data);
   let sum = 0;
   for (let i = 2; i <= 18; i += 2) {
     sum += parseInt(data.slice(i, i + 2), 16);
@@ -473,7 +474,7 @@ const checkRecv = (data, id, nodeid, command) => {
 
 const getSwitchStatus = (id, command) => {
   const nodeid = $(`#nodeID_${id}`).html();
-  const port = nodeid === 1 ? 3008 : 2322;
+  const port = parseInt(nodeid) === 1 ? 3008 : 2322;
   let flag = false;
 
   const sendCommand = (i) => {
