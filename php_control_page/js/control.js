@@ -394,7 +394,6 @@ const switchOnline = (id) => {
 const checkRecv = (data, id, nodeid, command) => {
   if (data.length !== 22) return false;
 
-  console.log(data);
   let sum = 0;
   for (let i = 2; i <= 18; i += 2) {
     sum += parseInt(data.slice(i, i + 2), 16);
@@ -449,17 +448,18 @@ const checkRecv = (data, id, nodeid, command) => {
         let resistance = voltage / current;
         console.log(data);
 
-        $(`#origin_resistence_${id}`).html(`${resistance}`);
+        const tmpId = parseInt(nodeid) === 1 ? 2 : 4;
+        $(`#origin_resistence_${tmpId}`).html(`${resistance}`);
 
-        const a = parseFloat($(`#old_a_${id}`).html());
-        const b = parseFloat($(`#old_b_${id}`).html());
+        const a = parseFloat($(`#old_a_${tmpId}`).html());
+        const b = parseFloat($(`#old_b_${tmpId}`).html());
         resistance = isFinite(resistance)
           ? (a * resistance + b).toFixed(4)
           : resistance;
         resistance = Math.round(resistance * 100) / 100;
 
-        $(`#value_${id}`).html(`電壓: ${voltage} / 特徵: ${current} / `);
-        $(`#resistence_${id}`).html(`${resistance}`);
+        $(`#value_${tmpId}`).html(`電壓: ${voltage} / 特徵: ${current} / `);
+        $(`#resistence_${tmpId}`).html(`${resistance}`);
         success = true;
       }
       break;
