@@ -9,6 +9,7 @@ const init_value = () => {
     dateType: "text",
     data: {
       field: 1,
+      num: 2,
     },
     success: (data) => {
       message = JSON.parse(data);
@@ -61,7 +62,9 @@ const init_table = () => {
                 </button>
                 &emsp;
                 <span id="on_off_${mes.id}">${
-              init[1].status === "Offline" ? "--" : init[1].status
+              init[mes.nodeID].status === "Offline"
+                ? "--"
+                : init[mes.nodeID].status
             }</span>
             `;
             break;
@@ -71,7 +74,7 @@ const init_table = () => {
                 <span id="value_${mes.id}"></span>阻抗: <span id="resistence_${
               mes.id
             }">${
-              init[1].resistence === null
+              init[mes.nodeID].resistence === null
                 ? "--"
                 : Math.round(
                     (parseFloat(mes.a) * init[1].resistence +
@@ -80,7 +83,9 @@ const init_table = () => {
                   ) / 100
             }</span>
                 <span style="display: none" id="origin_resistence_${mes.id}">${
-              init[1].resistence === null ? "--" : init[1].resistence
+              init[mes.nodeID].resistence === null
+                ? "--"
+                : init[mes.nodeID].resistence
             }</span>
                 <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
                 <span style="display: none" id="old_b_${mes.id}">${mes.b}</span>
@@ -105,8 +110,10 @@ const init_table = () => {
             break;
         }
         mes.status = `
-          <button class="control_online" id="status_${mes.id}" onclick="switchOnlineOpen(${mes.id})" type="button">
-              ${init[1].button}
+          <button class="control_online" id="status_${
+            mes.id
+          }" onclick="switchOnlineOpen(${mes.id})" type="button">
+              ${init[mes.nodeID].button}
           </button>
         `;
 
