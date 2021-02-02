@@ -24,7 +24,7 @@ const init_table = () => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fileds[0],
     },
     success: (data) => {
       const init = init_value();
@@ -77,7 +77,7 @@ const init_table = () => {
               init[mes.nodeID].resistence === null
                 ? "--"
                 : Math.round(
-                    (parseFloat(mes.a) * init[1].resistence +
+                    (parseFloat(mes.a) * init[mes.nodeID].resistence +
                       parseFloat(mes.b)) *
                       100
                   ) / 100
