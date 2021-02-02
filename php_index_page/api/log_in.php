@@ -14,7 +14,7 @@ mysqli_query($conn, "SET NAMES 'utf8'");
 $search = "SELECT * FROM permission where account='$acc' AND password='$pwd'";
 $result = $conn->query($search);
 if (mysqli_num_rows($result)) {
-    $message = array("token" => hash("sha256", $pwd) . "|" . $acc, "valid" => true);
+    $message = array("token" => hash("sha256", $pwd) . "|" . $acc . "|" . $result->fetch_array(MYSQLI_ASSOC)["department"], "valid" => true);
 } else {
     $message = array("valid" => false);
 }
