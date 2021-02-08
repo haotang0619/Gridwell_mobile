@@ -173,10 +173,12 @@ let show = "vr";
 const switchVR = () => {
   if (show === "vr") {
     $("#vr_field").hide();
+    $("#vr_field_text").hide();
     $("#image_field").show();
     show = "image";
   } else {
     $("#vr_field").show();
+    $("#vr_field_text").show();
     $("#image_field").hide();
     show = "vr";
   }
@@ -186,6 +188,7 @@ const editNameOpen = (id) => {
   const name = $(`#name_${id}`).html();
   const IP = $(`#IP_${id}`).html();
   const port = $(`#port_${id}`).html();
+  const imageUrl = $(`#image_${id}`).html();
 
   $("#modal").css("display", "block");
   const header = `
@@ -227,23 +230,24 @@ const editNameOpen = (id) => {
     }">
         <span class="control_text">VR網址</span>
         <div class="input_group">
-            <input type="text" class="input_area" id="new_vr" value="" required />
+            <input type="text" class="input_area" id="new_vr" value="${imageUrl}" required />
             <fieldset class="input_field">
                 <legend class="input_legend">輸入VR網址</legend>
             </fieldset>
         </div>
+    </div>
+    <div class="control_form" id="vr_field_text" style="display: ${
+      show === "vr" ? "flex" : "none"
+    }">
+      <span>(111.185.9.227開頭代表為上傳之圖片)</span>
     </div>
     <div class="control_form" id="image_field" style="display: ${
       show === "vr" ? "none" : "flex"
     }">
         <span class="control_text">上傳圖片</span>
         <div class="input_group">
-            <input type="text" class="input_area" id="new_image" value="" required readonly
-            style="width: 135px" />
-            <fieldset class="input_field" style="width: 111px">
-                <legend class="input_legend">檔案</legend>
-            </fieldset>
-            <button>上傳</button>
+            <input type="file" accept="image/png, image/jpeg" class="input_area" id="new_image" required
+            style="padding: 0" />
         </div>
     </div>
     <div class="control_form">
@@ -272,10 +276,39 @@ const editName = (id) => {
   const name = $("#new_name").val();
   const IP = $("#new_IP").val();
   const port = $("#new_port").val();
+  let imageUrl = $("#new_vr").val();
+  const image = $("#new_image")[0].files[0];
+  const nodeid = $(`#nodeID_${id}`).html();
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
   $("#confirm").prepend(loadingIcon());
+
+  if (show === "image") {
+    imageUrl = `http://111.185.9.227:8040/IoT/images/image_${1}_${nodeid}.jpg`;
+
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("field", 1);
+    formData.append("nodeid", nodeid);
+
+    $.ajax({
+      url: `/${site}/php_control_page/api/add_image.php`,
+      async: false,
+      dataType: "text",
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      type: "post",
+      success: function (data) {
+        const message = JSON.parse(data);
+        if (!message.success) {
+          alert("圖片上傳失敗，請重試！");
+        }
+      },
+    });
+  }
 
   $.ajax({
     url: `/${site}/php_control_page/api/edit_name.php`,
@@ -287,6 +320,7 @@ const editName = (id) => {
       name,
       IP,
       port,
+      imageUrl,
     },
     success: (data) => {
       const message = JSON.parse(data);
@@ -294,6 +328,7 @@ const editName = (id) => {
         $(`#name_${id}`).text(name);
         $(`#IP_${id}`).text(IP);
         $(`#port_${id}`).text(port);
+        $(`#image_${id}`).text(imageUrl);
         closeCheck();
         closeModal();
       } else {
