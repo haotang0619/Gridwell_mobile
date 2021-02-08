@@ -141,7 +141,7 @@ const init_table = () => {
         // sortOrder: "desc",
       });
     },
-    error: () => alert("網路錯誤，請重試！"),
+    error: () => alert("訊號不穩，請重試！"),
   });
 };
 
@@ -249,7 +249,7 @@ const editName = (id) => {
         closeCheck();
         closeModal();
       } else {
-        alert("網路錯誤，請重試！");
+        alert("訊號不穩，請重試！");
         enableButton("cancel");
         enableButton("confirm");
         $("#confirm").html("確認");
@@ -257,7 +257,7 @@ const editName = (id) => {
       $("#check_backdrop").css("pointer-events", "auto");
     },
     error: () => {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
@@ -297,7 +297,7 @@ const switchOn = (id) => {
       },
     });
     if (!flag && i === 4) {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
@@ -341,7 +341,7 @@ const switchOff = (id) => {
       },
     });
     if (!flag && i === 4) {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
@@ -385,7 +385,7 @@ const switchOnline = (id) => {
       },
     });
     if (!flag && i === 4) {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
@@ -504,7 +504,7 @@ const getSwitchStatus = (id, command) => {
         $(`#on_off_${id}`).text("--");
         $(`#status_${id}`).html("未知");
       } else {
-        alert("網路錯誤，請重試！");
+        alert("訊號不穩，請重試！");
         enableButton("cancel");
         enableButton("confirm");
         $("#confirm").html("確認");
@@ -652,7 +652,7 @@ const setFormula = (id) => {
         closeCheck();
         closeModal();
       } else {
-        alert("網路錯誤，請重試！");
+        alert("訊號不穩，請重試！");
         enableButton("cancel");
         enableButton("confirm");
         $("#confirm").html("確認");
@@ -660,7 +660,7 @@ const setFormula = (id) => {
       $("#check_backdrop").css("pointer-events", "auto");
     },
     error: () => {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
@@ -742,7 +742,7 @@ const editVideo = (id) => {
         closeCheck();
         closeModal();
       } else {
-        alert("網路錯誤，請重試！");
+        alert("訊號不穩，請重試！");
         enableButton("cancel");
         enableButton("confirm");
         $("#confirm").html("確認");
@@ -750,7 +750,7 @@ const editVideo = (id) => {
       $("#check_backdrop").css("pointer-events", "auto");
     },
     error: () => {
-      alert("網路錯誤，請重試！");
+      alert("訊號不穩，請重試！");
       enableButton("cancel");
       enableButton("confirm");
       $("#confirm").html("確認");
