@@ -41,12 +41,20 @@ const init_table = () => {
           <span style="display: none" id="IP_${mes.id}">${mes.IP}</span>
           <span style="display: none" id="port_${mes.id}">${mes.port}</span>
           <span style="display: none" id="nodeID_${mes.id}">${mes.nodeID}</span>
+          <span style="display: none" id="image_${mes.id}">${mes.image}</span>
         `;
         mes.infor += `
           <button class="control_setting" onclick="editNameOpen(${
             mes.id
           })" type="button">
               ${editIcon("button_svg control_svg")}
+          </button>
+        `;
+        mes.infor += `
+          <button class="control_setting" onclick="viewImage(${
+            mes.id
+          })" type="button">
+              ${cameraIcon("button_svg control_svg")}
           </button>
         `;
 
@@ -161,6 +169,19 @@ const logOutLoading = () => {
   logOut();
 };
 
+let show = "vr";
+const switchVR = () => {
+  if (show === "vr") {
+    $("#vr_field").hide();
+    $("#image_field").show();
+    show = "image";
+  } else {
+    $("#vr_field").show();
+    $("#image_field").hide();
+    show = "vr";
+  }
+};
+
 const editNameOpen = (id) => {
   const name = $(`#name_${id}`).html();
   const IP = $(`#IP_${id}`).html();
@@ -200,6 +221,33 @@ const editNameOpen = (id) => {
                 <legend class="input_legend">輸入通訊埠</legend>
             </fieldset>
         </div>
+    </div>
+    <div class="control_form" id="vr_field" style="display: ${
+      show === "vr" ? "flex" : "none"
+    }">
+        <span class="control_text">VR網址</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_vr" value="" required />
+            <fieldset class="input_field">
+                <legend class="input_legend">輸入VR網址</legend>
+            </fieldset>
+        </div>
+    </div>
+    <div class="control_form" id="image_field" style="display: ${
+      show === "vr" ? "none" : "flex"
+    }">
+        <span class="control_text">上傳圖片</span>
+        <div class="input_group">
+            <input type="text" class="input_area" id="new_image" value="" required readonly
+            style="width: 135px" />
+            <fieldset class="input_field" style="width: 111px">
+                <legend class="input_legend">檔案</legend>
+            </fieldset>
+            <button>上傳</button>
+        </div>
+    </div>
+    <div class="control_form">
+      <button id="switch_vr" onclick="switchVR()">切換</button>
     </div>
   `;
 
@@ -549,6 +597,12 @@ const addHistory = (id, command) => {
       alert("網路錯誤：更新歷史資料失敗！");
     },
   });
+};
+
+const viewImage = (id) => {
+  const image = $(`#image_${id}`).html();
+
+  window.open(image, "_blank", "width=800,height=550");
 };
 
 const setFormulaOpen = (id) => {
