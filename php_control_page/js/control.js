@@ -8,7 +8,7 @@ const init_value = () => {
     async: false,
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fields[0],
       num: 2,
     },
     success: (data) => {
@@ -24,7 +24,7 @@ const init_table = () => {
     type: "POST",
     dateType: "text",
     data: {
-      field: $("#select_field").val() || fileds[0],
+      field: $("#select_field").val() || fields[0],
     },
     success: (data) => {
       const init = init_value();

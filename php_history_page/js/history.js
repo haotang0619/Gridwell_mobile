@@ -5,7 +5,7 @@ const init_table = () => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fields[0],
     },
     success: (data) => {
       $("#table_body").empty();
