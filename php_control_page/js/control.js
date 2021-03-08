@@ -1,6 +1,6 @@
 // Init table
 
-const init_value = () => {
+const init_value = (num) => {
   let message;
   $.ajax({
     url: `/${site}/php_control_page/api/get_value.php`,
@@ -9,7 +9,7 @@ const init_value = () => {
     dateType: "text",
     data: {
       field: $("#select_field").val() || fields[0],
-      num: 2,
+      num,
     },
     success: (data) => {
       message = JSON.parse(data);
@@ -27,7 +27,11 @@ const init_table = () => {
       field: $("#select_field").val() || fields[0],
     },
     success: (data) => {
-      const init = init_value();
+      const maxNodeID = JSON.parse(data).reduce((acc, cur) => {
+        return Math.max(acc, parseInt(cur.nodeID, 10));
+      }, -1);
+
+      const init = init_value(maxNodeID);
       Object.values(init).forEach((v) => {
         v.button = v.status === "Offline" ? "離線" : "上線";
         return v;
@@ -79,9 +83,9 @@ const init_table = () => {
 
           case "1":
             mes.content += `
-                <span id="value_${mes.id}"></span>阻抗: <span id="resistence_${
-              mes.id
-            }">${
+                <span id="value_${
+                  mes.nodeID
+                }"></span>阻抗: <span id="resistence_${mes.nodeID}">${
               init[mes.nodeID].resistence === null
                 ? "--"
                 : Math.round(
@@ -90,13 +94,19 @@ const init_table = () => {
                       100
                   ) / 100
             }</span>
-                <span style="display: none" id="origin_resistence_${mes.id}">${
+                <span style="display: none" id="origin_resistence_${
+                  mes.nodeID
+                }">${
               init[mes.nodeID].resistence === null
                 ? "--"
                 : init[mes.nodeID].resistence
             }</span>
-                <span style="display: none" id="old_a_${mes.id}">${mes.a}</span>
-                <span style="display: none" id="old_b_${mes.id}">${mes.b}</span>
+                <span style="display: none" id="old_a_${mes.nodeID}">${
+              mes.a
+            }</span>
+                <span style="display: none" id="old_b_${mes.nodeID}">${
+              mes.b
+            }</span>
                 <button class="control_setting" onclick="setFormulaOpen(${
                   mes.id
                 })" type="button">
@@ -121,7 +131,7 @@ const init_table = () => {
           <button class="control_online" id="status_${
             mes.id
           }" onclick="switchOnlineOpen(${mes.id})" type="button">
-              ${init[mes.nodeID].button}
+            ${init[mes.nodeID].button}
           </button>
         `;
 
@@ -260,7 +270,7 @@ const editNameOpen = (id) => {
         <button onclick="closeModal()" type="button">
             取消
         </button>
-        <button onclick="showCheck('name',${id})" type="button">
+        <button onclick="showCheck('name', ${id})" type="button">
             送出
         </button>
     </div>
@@ -285,11 +295,13 @@ const editName = (id) => {
   $("#confirm").prepend(loadingIcon());
 
   if (show === "image") {
-    imageUrl = `http://111.185.9.227:8040/IoT/images/image_${1}_${nodeid}.jpg`;
+    imageUrl = `http://111.185.9.227:8040/IoT/images/image_${
+      $("#select_field").val() || fields[0]
+    }_${nodeid}.jpg`;
 
     const formData = new FormData();
     formData.append("file", image);
-    formData.append("field", 1);
+    formData.append("field", $("#select_field").val() || fields[0]);
     formData.append("nodeid", nodeid);
 
     $.ajax({
@@ -315,22 +327,17 @@ const editName = (id) => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
-      id,
+      field: $("#select_field").val() || fields[0],
       name,
       IP,
       port,
       imageUrl,
+      nodeid,
     },
     success: (data) => {
       const message = JSON.parse(data);
       if (message.success) {
-        $(`#name_${id}`).text(name);
-        $(`#IP_${id}`).text(IP);
-        $(`#port_${id}`).text(port);
-        $(`#image_${id}`).text(imageUrl);
-        closeCheck();
-        closeModal();
+        history.go(0);
       } else {
         alert("訊號不穩，請重試！");
         enableButton("cancel");
@@ -442,8 +449,9 @@ const switchOnlineOpen = (id) => {
 };
 
 const switchOnline = (id) => {
-  const nodeid = $(`#nodeID_${id}`).html();
+  const IP = $(`#IP_${id}`).html();
   const port = $(`#port_${id}`).html();
+  const nodeid = $(`#nodeID_${id}`).html();
   $("#check_backdrop").css("pointer-events", "none");
   disableButton("cancel");
   disableButton("confirm");
@@ -453,7 +461,7 @@ const switchOnline = (id) => {
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: `http://111.185.9.227:${port}/init_stat`,
+      url: `http://${IP}:${port}/init_stat`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -538,18 +546,15 @@ const checkRecv = (data, id, nodeid, command) => {
         let resistance = voltage / current;
         console.log(data);
 
-        const tmpId = parseInt(nodeid) === 1 ? 2 : 4;
-        $(`#origin_resistence_${tmpId}`).html(`${resistance}`);
-
-        const a = parseFloat($(`#old_a_${tmpId}`).html());
-        const b = parseFloat($(`#old_b_${tmpId}`).html());
+        const a = parseFloat($(`#old_a_${nodeid}`).html());
+        const b = parseFloat($(`#old_b_${nodeid}`).html());
         resistance = isFinite(resistance)
           ? (a * resistance + b).toFixed(4)
           : resistance;
         resistance = Math.round(resistance * 100) / 100;
 
-        $(`#value_${tmpId}`).html(`電壓: ${voltage} / 特徵: ${current} / `);
-        $(`#resistence_${tmpId}`).html(`${resistance}`);
+        $(`#value_${nodeid}`).html(`電壓: ${voltage} / 特徵: ${current} / `);
+        $(`#resistence_${nodeid}`).html(`${resistance}`);
         success = true;
       }
       break;
@@ -563,14 +568,15 @@ const checkRecv = (data, id, nodeid, command) => {
 };
 
 const getSwitchStatus = (id, command) => {
-  const nodeid = $(`#nodeID_${id}`).html();
+  const IP = $(`#IP_${id}`).html();
   const port = $(`#port_${id}`).html();
+  const nodeid = $(`#nodeID_${id}`).html();
   let flag = false;
 
   const sendCommand = (i) => {
     if (flag) return;
     $.ajax({
-      url: `http://111.185.9.227:${port}/get_stat`,
+      url: `http://${IP}:${port}/get_stat`,
       type: "GET",
       dateType: "jsonp",
       data: {
@@ -618,7 +624,7 @@ const addHistory = (id, command) => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fields[0],
       name: $(`#name_${id}`).html(),
       record,
     },
@@ -629,6 +635,7 @@ const addHistory = (id, command) => {
       }
     },
     error: () => {
+      console.log("error");
       alert("網路錯誤：更新歷史資料失敗！");
     },
   });
@@ -716,7 +723,7 @@ const setFormula = (id) => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fields[0],
       id,
       new_a,
       new_b,
@@ -820,7 +827,7 @@ const editVideo = (id) => {
     type: "POST",
     dateType: "text",
     data: {
-      field: 1,
+      field: $("#select_field").val() || fields[0],
       id,
       new_youtube,
     },
@@ -864,7 +871,7 @@ const closeCheck = () => {
   $("#check").css("display", "none");
 };
 
-const showCheck = (action, id, nodeID) => {
+const showCheck = (action, id) => {
   $("#check").css("display", "block");
 
   switch (action) {

@@ -1,10 +1,10 @@
 <?php
 $field = $_POST["field"];
-$id = $_POST["id"];
 $name = $_POST["name"];
 $IP = $_POST["IP"];
 $port_edit = $_POST["port"];
 $image_url = $_POST["imageUrl"];
+$nodeid = $_POST["nodeid"];
 
 $site = explode("/", $_SERVER['REQUEST_URI'])[1];
 include $_SERVER["DOCUMENT_ROOT"] . "/" . $site . "/api/mysql.php";
@@ -15,8 +15,9 @@ if ($conn->connect_error) {
 }
 mysqli_query($conn, "SET NAMES 'utf8'");
 
-$search = "UPDATE `mobile_$field` SET `name` = '$name', `IP` = '$IP', `port` = $port_edit, `image` = '$image_url' WHERE `id` = $id";
-$result = $conn->query($search);
+$stmt = $conn->prepare("UPDATE `mobile_$field` SET `name` = ?, `IP` = ?, `port` = ?, `image` = ? WHERE `nodeid` = ?");
+$stmt->bind_param("ssdsd", $name, $IP, $port_edit, $image_url, $nodeid);
+$result = $stmt->execute();
 if ($result) {
     $message = array("success" => true);
 } else {

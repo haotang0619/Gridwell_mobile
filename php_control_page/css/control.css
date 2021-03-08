@@ -15,10 +15,6 @@
   width: 40px !important;
 }
 
-.control_name_td {
-  max-width: 90px;
-}
-
 .control_name_span {
   word-break: break-all;
 }

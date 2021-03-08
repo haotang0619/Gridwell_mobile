@@ -11,13 +11,12 @@ const init_select = () => {
       message.forEach((mes) => {
         if (allField.includes(String(mes.id))) {
           $("#select_field").append(`
-            <option value="${mes.id}" ${flag === 0 ? "selected" : ""}>${
-            mes.field
-          }</option>
+            <option value="${mes.id}">${mes.field}</option>
         `);
           flag = 1;
         }
       });
+      if (message.length > 0) $("#select_field").val(message[0]["id"]);
     },
     error: () => alert("訊號不穩，請重試！"),
   });
